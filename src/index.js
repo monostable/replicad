@@ -1,4 +1,4 @@
-class Resistor {
+class Component {
   constructor(description) {
     this.value = description;
   }
@@ -15,6 +15,12 @@ class Resistor {
   }
 }
 
+class Resistor extends Component {
+  constructor(description) {
+    super(description);
+  }
+}
+
 class Net {
   constructor() {}
 }
@@ -25,24 +31,25 @@ function Nets(n) {
 
 class Connection {
   constructor(one, two) {
-    this.one = one
-    this.two = two
+    this[0] = one;
+    this[1] = two;
   }
 }
 
 class Circuit {
   constructor() {
-    this.connections = []
+    this.connections = [];
   }
   connect() {
     Array.prototype.slice.call(arguments).forEach((x, i) => {
-      if (i > 0)  {
-        this._connect_two(x, arguments[i - 1])
+      if (i > 0) {
+        this._connect_two(x, arguments[i - 1]);
       }
-    })
+    });
   }
   _connect_two(one, two) {
-    this.connections.push(new Connection(one, two))
+    console.log(one instanceof Component);
+    this.connections.push(new Connection(one, two));
   }
 }
 
