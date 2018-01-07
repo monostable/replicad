@@ -1,8 +1,8 @@
-let {Resistor, Circuit, Net, Nets} = require('../src')
+let {Resistor, Circuit, Net, Nets} = require('../lib')
 let r1 = Resistor('1k 0603')
 let r2 = r1.copy()
 r1.equals(r2) // true
-let [vcc, vout, gnd] = Nets(3)
+const [vcc, vout, gnd] = Nets()
 
 let circuit = Circuit()
 circuit.connect(vcc, r1, r2)
