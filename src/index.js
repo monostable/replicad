@@ -1,6 +1,16 @@
+class Pin {
+  constructor(n) {
+    this.type = 'Pin';
+    this.name = n;
+  }
+}
+
 class Component {
   constructor(description) {
     this.value = description;
+    this.pins = [new Pin(0), new Pin(1)];
+    this.pin0 = this.pins[0];
+    this.pin1 = this.pins[1];
   }
   copy() {
     return Object.create(
@@ -20,21 +30,35 @@ class Resistor extends Component {
     super(description);
   }
 }
+Resistor = bindNew(Resistor);
 
 class Net {
-  constructor() {}
+  constructor() {
+    this.type = 'Net';
+  }
 }
 
 function Nets(n) {
   return Array(n, null).map(() => new Net());
 }
 
+function pinOrNet(x) {
+  return x instanceof Net || x instanceof Pin;
+}
+
 class Connection {
   constructor(one, two) {
+    if (!pinOrNet(one)) {
+      one = one.pins[0];
+    }
+    if (!pinOrNet(two)) {
+      two = two.pins[0];
+    }
     this[0] = one;
     this[1] = two;
   }
 }
+Connection = bindNew(Connection);
 
 class Circuit {
   constructor() {
@@ -48,9 +72,13 @@ class Circuit {
     });
   }
   _connect_two(one, two) {
-    console.log(one instanceof Component);
-    this.connections.push(new Connection(one, two));
+    this.connections.push(Connection(one, two));
   }
+}
+Circuit = bindNew(Circuit);
+
+function bindNew(cls) {
+  return (...args) => new cls(...args);
 }
 
 module.exports = {Resistor, Circuit, Net, Nets};
