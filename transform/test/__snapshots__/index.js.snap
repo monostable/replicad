@@ -75,3 +75,41 @@ let circuit = Circuit();
 circuit.connect(vcc, r1);
 "
 `;
+
+exports[`replicad 2. replicad: 2. replicad 1`] = `
+"
+Net()
+Nets()
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const __replicad__warnings__ = [];
+const __replicad__errors__ = [];
+__replicad__errors__.append({
+  \\"message\\": \\"'Net' called without being assigned to variable.\\",
+  \\"loc\\": {
+    \\"start\\": {
+      \\"line\\": 1,
+      \\"column\\": 0
+    },
+    \\"end\\": {
+      \\"line\\": 1,
+      \\"column\\": 5
+    }
+  }
+});
+__replicad__errors__.append({
+  \\"message\\": \\"'Nets' called without being assigned to variables.\\",
+  \\"loc\\": {
+    \\"start\\": {
+      \\"line\\": 2,
+      \\"column\\": 0
+    },
+    \\"end\\": {
+      \\"line\\": 2,
+      \\"column\\": 6
+    }
+  }
+});
+"
+`;

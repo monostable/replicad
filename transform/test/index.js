@@ -24,5 +24,12 @@ pluginTester({
       `,
       snapshot: true,
     },
+    {
+      code: `
+        Net()
+        Nets()
+      `,
+      snapshot: true,
+    },
   ],
 });

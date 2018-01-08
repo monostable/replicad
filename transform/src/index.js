@@ -26,52 +26,61 @@ module.exports = function() {
     path.insertAfter(ast);
   }
 
-  const AddVarNamesToNets = {
-    CallExpression(path) {
-      const callee = path.node.callee.name;
-      if (callee === 'Nets') {
-        if (path.parent.id.type === 'ArrayPattern') {
-          const names = path.parent.id.elements.map(x => x.name);
-          const a = t.arrayExpression(names.map(s => t.stringLiteral(s)));
-          if (path.node.arguments.length !== 0) {
-            warning(
-              path.parentPath.parentPath,
-              `'Nets' takes no arguments, ${path.node.arguments
-                .length} provided. Arguments will be ignored`,
-            );
-          }
-          path.node.arguments = [a];
-        } else {
-          const parent = path.parentPath.parentPath;
-          error(parent, "'Nets' called without array pattern.");
-        }
-      } else if (callee === 'Net') {
-        const name = path.parent.id.name;
+  function addNetNames(path) {
+    const callee = path.node.callee.name;
+    if (callee === 'Nets') {
+      if (path.parent.type !== 'VariableDeclarator') {
+        error(path, "'Nets' called without being assigned to variables.");
+        return;
+      }
+      if (path.parent.id.type === 'ArrayPattern') {
+        const names = path.parent.id.elements.map(x => x.name);
+        const a = t.arrayExpression(names.map(s => t.stringLiteral(s)));
         if (path.node.arguments.length !== 0) {
           warning(
             path.parentPath.parentPath,
-            `'Net' takes no arguments, ${path.node.arguments
+            `'Nets' takes no arguments, ${path.node.arguments
               .length} provided. Arguments will be ignored`,
           );
         }
-        path.node.arguments = [t.stringLiteral(name)];
+        path.node.arguments = [a];
+      } else {
+        const parent = path.parentPath.parentPath;
+        error(parent, "'Nets' called without array pattern.");
       }
-    },
-  };
+    } else if (callee === 'Net') {
+      if (path.parent.type !== 'VariableDeclarator') {
+        error(path, "'Net' called without being assigned to variable.");
+        return;
+      }
+      const name = path.parent.id.name;
+      if (path.node.arguments.length !== 0) {
+        warning(
+          path.parentPath.parentPath,
+          `'Net' takes no arguments, ${path.node.arguments
+            .length} provided. Arguments will be ignored`,
+        );
+      }
+      path.node.arguments = [t.stringLiteral(name)];
+    }
+  }
+
   function prependLog(path) {
     const errors = template.ast(`const ${ERROR} = []`);
     const warnings = template.ast(`const ${WARN} = []`);
     path.node.body.unshift(errors);
     path.node.body.unshift(warnings);
   }
+
   const visitor = {
-    VariableDeclaration(path) {
-      path.traverse(AddVarNamesToNets);
-    },
     Program(path) {
       prependLog(path);
     },
+    CallExpression(path) {
+      addNetNames(path);
+    },
   };
+
   return {
     visitor,
   };
