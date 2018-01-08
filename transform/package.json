@@ -5,5 +5,11 @@
   "scripts": {
     "test": "mocha"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^4.1.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.0.0-beta.36"
+  }
 }
