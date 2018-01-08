@@ -6,6 +6,10 @@ let [vcc, vout, gnd] = Nets()
 let r1 = Resistor()
 let r2 = r1.copy()
 
+let vcc2 = Net()
+
+let mistake = Nets()
+
 let circuit = Circuit()
 circuit.connect(vcc, r1)
 
@@ -16,6 +20,22 @@ const __replicad__errors__ = [];
 let [vcc, vout, gnd] = Nets([\\"vcc\\", \\"vout\\", \\"gnd\\"]);
 let r1 = Resistor();
 let r2 = r1.copy();
+
+let vcc2 = Net(\\"vcc2\\");
+
+__replicad__errors__.append({
+  \\"message\\": \\"'Nets' called without array pattern.\\",
+  \\"loc\\": {
+    \\"start\\": {
+      \\"line\\": 7,
+      \\"column\\": 0
+    },
+    \\"end\\": {
+      \\"line\\": 7,
+      \\"column\\": 20
+    }
+  }
+});
 
 let circuit = Circuit();
 circuit.connect(vcc, r1);

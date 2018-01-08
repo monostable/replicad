@@ -12,6 +12,10 @@ pluginTester({
         let r1 = Resistor()
         let r2 = r1.copy()
 
+        let vcc2 = Net()
+
+        let mistake = Nets()
+
         let circuit = Circuit()
         circuit.connect(vcc, r1)
       `,
