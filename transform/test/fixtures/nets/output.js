@@ -15,3 +15,5 @@ __replicad__errors__.append({
     }
   }
 });
+
+let vcc3 = Net("vcc3");

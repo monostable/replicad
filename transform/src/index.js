@@ -18,19 +18,19 @@ module.exports = function() {
 
   const AddVarNamesToNets = {
     CallExpression(path) {
-      if (path.node.callee.name === 'Nets') {
+      const callee = path.node.callee.name
+      if (callee === 'Nets') {
         if (path.parent.id.type === 'ArrayPattern') {
           const names = path.parent.id.elements.map(x => x.name);
           const a = t.arrayExpression(names.map(s => t.stringLiteral(s)));
           path.node.arguments = [a];
         } else {
-          error(
-            path.parentPath.parentPath,
-            "'Nets' called without array pattern.",
-          );
+          const parent = path.parentPath.parentPath;
+          error(parent, "'Nets' called without array pattern.");
         }
-      } else if (path.node.callee.name === 'Net') {
-        console.log(path.parent.id.type);
+      } else if (callee === 'Net') {
+        const name = path.parent.id.name;
+        path.node.arguments = [t.stringLiteral(name)]
       }
     },
   };
