@@ -1,6 +1,15 @@
 const {types: t} = require('@babel/core');
 
 module.exports = function() {
+  function log(message) {
+    const append = t.memberExpression(
+      t.identifier('__replicad__log__'),
+      t.identifier('append'),
+    );
+    const call = t.callExpression(append, [t.stringLiteral(message)]);
+    return t.expressionStatement(call);
+  }
+
   const AddVarNamesToNets = {
     CallExpression(path) {
       if (path.node.callee.name === 'Nets') {
@@ -9,7 +18,10 @@ module.exports = function() {
           const a = t.arrayExpression(names.map(s => t.stringLiteral(s)));
           path.node.arguments = [a];
         } else {
-          console.error('"Nets" called without array pattern.');
+          path
+            .parentPath
+            .parentPath
+            .replaceWith(log("'Nets' called without array pattern."));
         }
       } else if (path.node.callee.name === 'Net') {
         console.log(path.parent.id.type);
