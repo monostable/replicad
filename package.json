@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "babel-traverse": "^6.26.0",
-    "babylon": "^6.18.0"
+    "babel-plugin-transform-replicad": "./transform"
+  },
+  "scripts": {
+    "examples": "babel-node examples/*.js"
   },
   "devDependencies": {
-    "babel-plugin-tester": "^5.0.0",
-    "jest": "^22.0.4",
-    "mocha": "^4.1.0"
+    "babel-cli": "^6.26.0"
   }
 }
