@@ -5,5 +5,17 @@ pluginTester({
   plugin: replicadPlugin,
   pluginName: 'replicad',
   fixtures: path.join(__dirname, 'fixtures'),
-  snapshot: false,
+  tests: [
+    {
+      code: `
+        let [vcc, vout, gnd] = Nets()
+        let r1 = Resistor()
+        let r2 = r1.copy()
+
+        let circuit = Circuit()
+        circuit.connect(vcc, r1)
+      `,
+      snapshot: true,
+    },
+  ],
 });

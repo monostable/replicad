@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`replicad 1. replicad: 1. replicad 1`] = `
+"
+let [vcc, vout, gnd] = Nets()
+let r1 = Resistor()
+let r2 = r1.copy()
+
+let circuit = Circuit()
+circuit.connect(vcc, r1)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const __replicad__warnings__ = [];
+const __replicad__errors__ = [];
+let [vcc, vout, gnd] = Nets([\\"vcc\\", \\"vout\\", \\"gnd\\"]);
+let r1 = Resistor();
+let r2 = r1.copy();
+
+let circuit = Circuit();
+circuit.connect(vcc, r1);
+"
+`;
