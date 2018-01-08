@@ -5,4 +5,5 @@ pluginTester({
   plugin: replicadPlugin,
   pluginName: 'replicad',
   fixtures: path.join(__dirname, 'fixtures'),
+  snapshot: false,
 });
