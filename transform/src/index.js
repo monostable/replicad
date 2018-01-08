@@ -29,25 +29,29 @@ module.exports = function() {
   function addNetNames(path) {
     const callee = path.node.callee.name;
     if (callee === 'Nets') {
-      if (path.parent.type !== 'VariableDeclarator') {
-        error(path, "'Nets' called without being assigned to variables.");
-        return;
-      }
-      if (path.parent.id.type === 'ArrayPattern') {
-        const names = path.parent.id.elements.map(x => x.name);
-        const a = t.arrayExpression(names.map(s => t.stringLiteral(s)));
-        path.node.arguments = [a];
-      } else {
-        const parent = path.parentPath.parentPath;
-        error(parent, "'Nets' called without array pattern.");
+      if (path.node.arguments.length === 0) {
+        if (path.parent.type !== 'VariableDeclarator') {
+          error(path, "'Nets' called without being assigned to variables.");
+          return;
+        }
+        if (path.parent.id.type === 'ArrayPattern') {
+          const names = path.parent.id.elements.map(x => x.name);
+          const a = t.arrayExpression(names.map(s => t.stringLiteral(s)));
+          path.node.arguments = [a];
+        } else {
+          const parent = path.parentPath.parentPath;
+          error(parent, "'Nets' called without array pattern.");
+        }
       }
     } else if (callee === 'Net') {
-      if (path.parent.type !== 'VariableDeclarator') {
-        error(path, "'Net' called without being assigned to variable.");
-        return;
+      if (path.node.arguments.length === 0) {
+        if (path.parent.type !== 'VariableDeclarator') {
+          error(path, "'Net' called without being assigned to variable.");
+          return;
+        }
+        const name = path.parent.id.name;
+        path.node.arguments = [t.stringLiteral(name)];
       }
-      const name = path.parent.id.name;
-      path.node.arguments = [t.stringLiteral(name)];
     }
   }
 
