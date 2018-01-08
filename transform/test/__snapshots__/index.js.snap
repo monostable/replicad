@@ -1,42 +1,56 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`replicad 1. replicad: 1. replicad 1`] = `
+exports[`replicad add net names into Net() and Nets(): add net names into Net() and Nets() 1`] = `
 "
 let [vcc, vout, gnd] = Nets()
-let r1 = Resistor()
-let r2 = r1.copy()
-
-let vcc2 = Net()
-let mistake5 = Net(\\"mistake5\\")
-
-let mistake = Nets();
-
-let [mistake2, mistake3, mistake4] = Nets(\\"mistakes\\");
-
-let circuit = Circuit()
-circuit.connect(vcc, r1)
+let vout2 = Net()
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
 const __replicad__warnings__ = [];
 const __replicad__errors__ = [];
 let [vcc, vout, gnd] = Nets([\\"vcc\\", \\"vout\\", \\"gnd\\"]);
-let r1 = Resistor();
-let r2 = r1.copy();
+let vout2 = Net(\\"vout2\\");
+"
+`;
 
-let vcc2 = Net(\\"vcc2\\");
-let mistake5 = Net(\\"mistake5\\");
+exports[`replicad adds errors and warnings when used incorrectly: adds errors and warnings when used incorrectly 1`] = `
+"
+let mistake1 = Nets()
+let mistake2 = Net(\\"mistake\\")
+let mistake3 = Nets(\\"mistake\\")
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const __replicad__warnings__ = [];
+const __replicad__errors__ = [];
+
+__replicad__errors__.append({
+  \\"message\\": \\"'Nets' called without array pattern.\\",
+  \\"loc\\": {
+    \\"start\\": {
+      \\"line\\": 1,
+      \\"column\\": 0
+    },
+    \\"end\\": {
+      \\"line\\": 1,
+      \\"column\\": 21
+    }
+  }
+});
+
+let mistake2 = Net(\\"mistake2\\");
 
 __replicad__warnings__.append({
   \\"message\\": \\"'Net' takes no arguments, 1 provided. Arguments will be ignored\\",
   \\"loc\\": {
     \\"start\\": {
-      \\"line\\": 6,
+      \\"line\\": 2,
       \\"column\\": 0
     },
     \\"end\\": {
-      \\"line\\": 6,
-      \\"column\\": 30
+      \\"line\\": 2,
+      \\"column\\": 29
     }
   }
 });
@@ -45,38 +59,19 @@ __replicad__errors__.append({
   \\"message\\": \\"'Nets' called without array pattern.\\",
   \\"loc\\": {
     \\"start\\": {
-      \\"line\\": 8,
+      \\"line\\": 3,
       \\"column\\": 0
     },
     \\"end\\": {
-      \\"line\\": 8,
-      \\"column\\": 21
+      \\"line\\": 3,
+      \\"column\\": 30
     }
   }
 });
-
-let [mistake2, mistake3, mistake4] = Nets([\\"mistake2\\", \\"mistake3\\", \\"mistake4\\"]);
-
-__replicad__warnings__.append({
-  \\"message\\": \\"'Nets' takes no arguments, 1 provided. Arguments will be ignored\\",
-  \\"loc\\": {
-    \\"start\\": {
-      \\"line\\": 10,
-      \\"column\\": 0
-    },
-    \\"end\\": {
-      \\"line\\": 10,
-      \\"column\\": 54
-    }
-  }
-});
-
-let circuit = Circuit();
-circuit.connect(vcc, r1);
 "
 `;
 
-exports[`replicad 2. replicad: 2. replicad 1`] = `
+exports[`replicad bare Net and Nets cause errors: bare Net and Nets cause errors 1`] = `
 "
 Net()
 Nets()

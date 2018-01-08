@@ -7,24 +7,24 @@ pluginTester({
   fixtures: path.join(__dirname, 'fixtures'),
   tests: [
     {
+      title: 'add net names into Net() and Nets()',
       code: `
         let [vcc, vout, gnd] = Nets()
-        let r1 = Resistor()
-        let r2 = r1.copy()
-
-        let vcc2 = Net()
-        let mistake5 = Net("mistake5")
-
-        let mistake = Nets();
-
-        let [mistake2, mistake3, mistake4] = Nets("mistakes");
-
-        let circuit = Circuit()
-        circuit.connect(vcc, r1)
+        let vout2 = Net()
       `,
       snapshot: true,
     },
     {
+      title: 'adds errors and warnings when used incorrectly',
+      code: `
+        let mistake1 = Nets()
+        let mistake2 = Net("mistake")
+        let mistake3 = Nets("mistake")
+      `,
+      snapshot: true,
+    },
+    {
+      title: 'bare Net and Nets cause errors',
       code: `
         Net()
         Nets()
