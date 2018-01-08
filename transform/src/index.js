@@ -1,24 +1,34 @@
 const {types: t} = require('@babel/core');
 const {default: template} = require('@babel/template');
+const toAst = require('babel-literal-to-ast');
+
+const ERROR = '__replicad__errors__'
+const WARN = '__replicad__warnings__'
 
 module.exports = function() {
+  const log = template('LOG.append(OBJ)');
+
   function error(path, message) {
-    const obj = {message, loc: path.node.loc};
-    path.replaceWith(
-      template.ast(`__replicad__errors__.append(${JSON.stringify(obj)})`),
-    );
+    const obj = toAst({message, loc: path.node.loc});
+    const ast = log({
+      LOG: ERROR,
+      OBJ: obj,
+    });
+    path.replaceWith(ast);
   }
 
   function warning(path, message) {
-    const obj = {message, loc: path.node.loc};
-    path.insertAfter(
-      template.ast(`__replicad__warnings__.append(${JSON.stringify(obj)})`),
-    );
+    const obj = toAst({message, loc: path.node.loc});
+    const ast = log({
+      LOG: WARN,
+      OBJ: obj,
+    });
+    path.insertAfter(ast);
   }
 
   const AddVarNamesToNets = {
     CallExpression(path) {
-      const callee = path.node.callee.name
+      const callee = path.node.callee.name;
       if (callee === 'Nets') {
         if (path.parent.id.type === 'ArrayPattern') {
           const names = path.parent.id.elements.map(x => x.name);
@@ -30,13 +40,13 @@ module.exports = function() {
         }
       } else if (callee === 'Net') {
         const name = path.parent.id.name;
-        path.node.arguments = [t.stringLiteral(name)]
+        path.node.arguments = [t.stringLiteral(name)];
       }
     },
   };
   function prependLog(path) {
-    const errors = template.ast('const __replicad__errors__ = []');
-    const warnings = template.ast('const __replicad__warnings__ = []');
+    const errors = template.ast(`const ${ERROR} = []`);
+    const warnings = template.ast(`const ${WARN} = []`);
     path.node.body.unshift(errors);
     path.node.body.unshift(warnings);
   }
