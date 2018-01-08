@@ -17,8 +17,6 @@ let vout2 = Net(\\"vout2\\");
 exports[`replicad adds errors and warnings when used incorrectly: adds errors and warnings when used incorrectly 1`] = `
 "
 let mistake1 = Nets()
-let mistake2 = Net(\\"mistake\\")
-let mistake3 = Nets(\\"mistake\\")
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -35,36 +33,6 @@ __replicad__errors__.append({
     \\"end\\": {
       \\"line\\": 1,
       \\"column\\": 21
-    }
-  }
-});
-
-let mistake2 = Net(\\"mistake2\\");
-
-__replicad__warnings__.append({
-  \\"message\\": \\"'Net' takes no arguments, 1 provided. Arguments will be ignored\\",
-  \\"loc\\": {
-    \\"start\\": {
-      \\"line\\": 2,
-      \\"column\\": 0
-    },
-    \\"end\\": {
-      \\"line\\": 2,
-      \\"column\\": 29
-    }
-  }
-});
-
-__replicad__errors__.append({
-  \\"message\\": \\"'Nets' called without array pattern.\\",
-  \\"loc\\": {
-    \\"start\\": {
-      \\"line\\": 3,
-      \\"column\\": 0
-    },
-    \\"end\\": {
-      \\"line\\": 3,
-      \\"column\\": 30
     }
   }
 });

@@ -18,8 +18,6 @@ pluginTester({
       title: 'adds errors and warnings when used incorrectly',
       code: `
         let mistake1 = Nets()
-        let mistake2 = Net("mistake")
-        let mistake3 = Nets("mistake")
       `,
       snapshot: true,
     },

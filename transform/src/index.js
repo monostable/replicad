@@ -36,13 +36,6 @@ module.exports = function() {
       if (path.parent.id.type === 'ArrayPattern') {
         const names = path.parent.id.elements.map(x => x.name);
         const a = t.arrayExpression(names.map(s => t.stringLiteral(s)));
-        if (path.node.arguments.length !== 0) {
-          warning(
-            path.parentPath.parentPath,
-            `'Nets' takes no arguments, ${path.node.arguments
-              .length} provided. Arguments will be ignored`,
-          );
-        }
         path.node.arguments = [a];
       } else {
         const parent = path.parentPath.parentPath;
@@ -54,13 +47,6 @@ module.exports = function() {
         return;
       }
       const name = path.parent.id.name;
-      if (path.node.arguments.length !== 0) {
-        warning(
-          path.parentPath.parentPath,
-          `'Net' takes no arguments, ${path.node.arguments
-            .length} provided. Arguments will be ignored`,
-        );
-      }
       path.node.arguments = [t.stringLiteral(name)];
     }
   }
