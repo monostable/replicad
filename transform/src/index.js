@@ -9,6 +9,13 @@ module.exports = function() {
     );
   }
 
+  function warning(path, message) {
+    const obj = {message, loc: path.node.loc};
+    path.insertAfter(
+      template.ast(`__replicad__warnings__.append(${JSON.stringify(obj)})`),
+    );
+  }
+
   const AddVarNamesToNets = {
     CallExpression(path) {
       if (path.node.callee.name === 'Nets') {
