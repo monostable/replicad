@@ -13,6 +13,7 @@ pluginTester({
         let r2 = r1.copy()
 
         let vcc2 = Net()
+        let mistake5 = Net("mistake5")
 
         let mistake = Nets();
 
