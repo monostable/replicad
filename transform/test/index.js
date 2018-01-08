@@ -14,7 +14,9 @@ pluginTester({
 
         let vcc2 = Net()
 
-        let mistake = Nets()
+        let mistake = Nets();
+
+        let [mistake2, mistake3, mistake4] = Nets("mistakes");
 
         let circuit = Circuit()
         circuit.connect(vcc, r1)

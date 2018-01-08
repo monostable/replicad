@@ -2,8 +2,8 @@ const {types: t} = require('@babel/core');
 const {default: template} = require('@babel/template');
 const toAst = require('babel-literal-to-ast');
 
-const ERROR = '__replicad__errors__'
-const WARN = '__replicad__warnings__'
+const ERROR = '__replicad__errors__';
+const WARN = '__replicad__warnings__';
 
 module.exports = function() {
   const log = template('LOG.append(OBJ)');
