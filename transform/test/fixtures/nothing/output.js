@@ -1,2 +1,3 @@
-const __replicad__log__ = [];
+const __replicad__warnings__ = [];
+const __replicad__errors__ = [];
 var i = 0;

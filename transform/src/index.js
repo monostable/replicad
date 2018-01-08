@@ -2,8 +2,11 @@ const {types: t} = require('@babel/core');
 const {default: template} = require('@babel/template');
 
 module.exports = function() {
-  function log(message) {
-    return template.ast(`__replicad__log__.append("${message}")`);
+  function error(path, message) {
+    const obj = {message, loc: path.node.loc};
+    path.replaceWith(
+      template.ast(`__replicad__errors__.append(${JSON.stringify(obj)})`),
+    );
   }
 
   const AddVarNamesToNets = {
@@ -14,8 +17,9 @@ module.exports = function() {
           const a = t.arrayExpression(names.map(s => t.stringLiteral(s)));
           path.node.arguments = [a];
         } else {
-          path.parentPath.parentPath.replaceWith(
-            log("'Nets' called without array pattern."),
+          error(
+            path.parentPath.parentPath,
+            "'Nets' called without array pattern.",
           );
         }
       } else if (path.node.callee.name === 'Net') {
@@ -24,8 +28,10 @@ module.exports = function() {
     },
   };
   function prependLog(path) {
-    const log = template.ast('const __replicad__log__ = []');
-    path.node.body.unshift(log);
+    const errors = template.ast('const __replicad__errors__ = []');
+    const warnings = template.ast('const __replicad__warnings__ = []');
+    path.node.body.unshift(errors);
+    path.node.body.unshift(warnings);
   }
   const visitor = {
     VariableDeclaration(path) {
