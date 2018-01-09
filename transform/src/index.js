@@ -5,6 +5,16 @@ const toAst = require('babel-literal-to-ast');
 const ERROR = '__replicad__errors__';
 const WARN = '__replicad__warnings__';
 
+function incrementRef(str) {
+  const ns = str.split(/\D/);
+  const lastN = ns[ns.length - 1];
+  const n = parseInt(lastN);
+  if (isNaN(n)) {
+    return str + '1';
+  }
+  return str.slice(0, str.lastIndexOf(lastN)) + String(n + 1);
+}
+
 module.exports = function() {
   const log = template('LOG.append(OBJ)');
 
