@@ -8,5 +8,5 @@ const gnd = Net()
 const circuit = Circuit()
 circuit.connect(vcc, r1, r2)
 //circuit.connect_through(vcc, r1, vout, r2, gnd)
-console.log(JSON.stringify(circuit, null, 2))
+console.log(circuit)
 //export circuit
