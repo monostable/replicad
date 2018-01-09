@@ -28,6 +28,7 @@ module.exports = function() {
 
   function addNetNames(path) {
     const callee = path.node.callee.name;
+    const components = ['Resistor', 'Component'];
     if (callee === 'Nets') {
       if (path.node.arguments.length === 0) {
         if (path.parent.type !== 'VariableDeclarator') {
@@ -46,11 +47,20 @@ module.exports = function() {
     } else if (callee === 'Net') {
       if (path.node.arguments.length === 0) {
         if (path.parent.type !== 'VariableDeclarator') {
-          error(path, "'Net' called without being assigned to variable.");
+          error(path, `'${callee}' called without being assigned to variable.`);
           return;
         }
         const name = path.parent.id.name;
         path.node.arguments = [t.stringLiteral(name)];
+      }
+    } else if (components.includes(callee)) {
+      if (path.node.arguments.length < 2) {
+        if (path.parent.type !== 'VariableDeclarator') {
+          error(path, `'${callee}' called without being assigned to variable.`);
+          return;
+        }
+        const name = path.parent.id.name;
+        path.node.arguments.push(t.stringLiteral(name));
       }
     }
   }
