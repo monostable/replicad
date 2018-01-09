@@ -1,9 +1,15 @@
 const {types: t} = require('@babel/core');
 const {default: template} = require('@babel/template');
 const toAst = require('babel-literal-to-ast');
+const nodePath = require('path')
 
 const ERROR = '__replicad__errors__';
 const WARN = '__replicad__warnings__';
+
+function moduleName(p) {
+  const ext = nodePath.extname(p);
+  return nodePath.basename(p).replace(RegExp('\\' + ext + '$'), '')
+}
 
 module.exports = function() {
   const log = template('LOG.append(OBJ)');
@@ -44,13 +50,16 @@ module.exports = function() {
           error(parent, "'Nets' called without array pattern.");
         }
       }
-    } else if (callee === 'Net') {
+    } else if (callee === 'Net' || callee === 'Circuit') {
       if (path.node.arguments.length === 0) {
         if (path.parent.type !== 'VariableDeclarator') {
           error(path, `'${callee}' called without being assigned to variable.`);
           return;
         }
-        const name = path.parent.id.name;
+        let name = path.parent.id.name;
+        if (callee === 'Circuit') {
+          name = moduleName(path.hub.file.opts.filename) + '.' + name;
+        }
         path.node.arguments = [t.stringLiteral(name)];
       }
     } else if (components.includes(callee)) {

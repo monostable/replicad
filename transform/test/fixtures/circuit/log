@@ -1,0 +1,15 @@
+yarn run v1.3.2
+$ jest --testMatch **/test/index.js
+  console.log src/index.js:49
+    code
+
+  console.log src/index.js:49
+    code
+
+  console.log src/index.js:49
+    unknown
+
+  console.log src/index.js:49
+    unknown
+
+Done in 3.21s.
