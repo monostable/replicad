@@ -244,6 +244,13 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
+babel-plugin-transform-replicad@./transform:
+  version "1.0.0"
+  dependencies:
+    "@babel/core" "^7.0.0-beta.36"
+    "@babel/template" "^7.0.0-beta.37"
+    babel-literal-to-ast "^1.0.0"
+
 babel-plugin-transform-replicad@./transform/:
   version "1.0.0"
   dependencies:

@@ -6,9 +6,9 @@ const gnd = Net()
 
 const circuit = Circuit()
 circuit.connect(vcc, r1)
-circuit.connect(r1.pin1, vout)
+circuit.connect(r1.pin2, vout)
 circuit.connect(vout, r2)
-circuit.connect(r2.pin1, gnd)
+circuit.connect(r2.pin2, gnd)
 //circuit.connect_through(vcc, r1, vout, r2, gnd)
 console.log(JSON.stringify(circuit.toYosys(), null, 2))
 //export circuit
