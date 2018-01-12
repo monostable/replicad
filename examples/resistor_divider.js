@@ -8,15 +8,15 @@ const {
   Output,
   Input,
 } = require('../lib');
+
 const r1 = Resistor('1k 0603');
 const r2 = Resistor('500 ohm 0603');
+
 const vcc = Power();
 const gnd = Ground();
 
 const vout = Output();
-const vin = Input();
 
 const circuit = Circuit();
-circuit.connect_through(vcc, r1, r2, gnd);
-circuit.connect(r1.pin2, vout);
+circuit.chain(vcc, r1, vout, r2, gnd);
 console.log(JSON.stringify(circuit.toYosys(), null, 2));
