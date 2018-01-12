@@ -35,6 +35,7 @@ module.exports = function() {
   function addNetNames(path) {
     const callee = path.node.callee.name;
     const components = ['Resistor', 'Capacitor', 'Component'];
+    const nets = ['Net', 'Power', 'Gnd', 'Input', 'Output'];
     if (callee === 'Nets') {
       if (path.node.arguments.length === 0) {
         if (path.parent.type !== 'VariableDeclarator') {
@@ -50,7 +51,7 @@ module.exports = function() {
           error(parent, "'Nets' called without array pattern.");
         }
       }
-    } else if (callee === 'Net' || callee === 'Circuit') {
+    } else if (callee === 'Circuit' || nets.includes(callee)) {
       if (path.node.arguments.length === 0) {
         if (path.parent.type !== 'VariableDeclarator') {
           error(path, `'${callee}' called without being assigned to variable.`);
