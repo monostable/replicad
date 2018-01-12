@@ -4,14 +4,14 @@ const {
   Net,
   Nets,
   Power,
-  Gnd,
+  Ground,
   Output,
   Input,
 } = require('../lib');
 const r1 = Resistor('1k 0603');
 const r2 = Resistor('500 ohm 0603');
 const vcc = Power();
-const gnd = Gnd();
+const gnd = Ground();
 
 const vout = Output();
 const vin = Input();

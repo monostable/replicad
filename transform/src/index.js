@@ -35,7 +35,7 @@ module.exports = function() {
   function addNetNames(path) {
     const callee = path.node.callee.name;
     const components = ['Resistor', 'Capacitor', 'Component'];
-    const nets = ['Net', 'Power', 'Gnd', 'Input', 'Output'];
+    const nets = ['Net', 'Power', 'Ground', 'Input', 'Output'];
     if (callee === 'Nets') {
       if (path.node.arguments.length === 0) {
         if (path.parent.type !== 'VariableDeclarator') {

@@ -3,7 +3,7 @@
     "@babel/cli": "^7.0.0-beta.37",
     "@babel/core": "^7.0.0-beta.37",
     "@babel/node": "^7.0.0-beta.37",
-    "babel-plugin-transform-replicad": "./transform/"
+    "babel-plugin-transform-replicad": "./transform"
   },
   "scripts": {
     "examples": "for f in examples/*.js; do babel-node \"$f\"; done"
