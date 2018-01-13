@@ -1,22 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`replicad add net names into Net() and Nets(): add net names into Net() and Nets() 1`] = `
+exports[`replicad add label names into Label() and Labels(): add label names into Label() and Labels() 1`] = `
 "
-let [vcc, vout, gnd] = Nets()
-let vout2 = Net()
+let [vcc, vout, gnd] = Labels()
+let vout2 = Label()
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
 const __replicad__warnings__ = [];
 const __replicad__errors__ = [];
-let [vcc, vout, gnd] = Nets([\\"vcc\\", \\"vout\\", \\"gnd\\"]);
-let vout2 = Net(\\"vout2\\");
+let [vcc, vout, gnd] = Labels([\\"vcc\\", \\"vout\\", \\"gnd\\"]);
+let vout2 = Label(\\"vout2\\");
 "
 `;
 
 exports[`replicad adds errors and warnings when used incorrectly: adds errors and warnings when used incorrectly 1`] = `
 "
-let mistake1 = Nets()
+let mistake1 = Labels()
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -24,7 +24,7 @@ const __replicad__warnings__ = [];
 const __replicad__errors__ = [];
 
 __replicad__errors__.append({
-  \\"message\\": \\"'Nets' called without array pattern.\\",
+  \\"message\\": \\"'Labels' called without array pattern.\\",
   \\"loc\\": {
     \\"start\\": {
       \\"line\\": 1,
@@ -32,24 +32,24 @@ __replicad__errors__.append({
     },
     \\"end\\": {
       \\"line\\": 1,
-      \\"column\\": 21
+      \\"column\\": 23
     }
   }
 });
 "
 `;
 
-exports[`replicad bare Net and Nets cause errors: bare Net and Nets cause errors 1`] = `
+exports[`replicad bare Label and Labels cause errors: bare Label and Labels cause errors 1`] = `
 "
-Net()
-Nets()
+Label()
+Labels()
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
 const __replicad__warnings__ = [];
 const __replicad__errors__ = [];
 __replicad__errors__.append({
-  \\"message\\": \\"'Net' called without being assigned to variable.\\",
+  \\"message\\": \\"'Label' called without being assigned to variable.\\",
   \\"loc\\": {
     \\"start\\": {
       \\"line\\": 1,
@@ -57,12 +57,12 @@ __replicad__errors__.append({
     },
     \\"end\\": {
       \\"line\\": 1,
-      \\"column\\": 5
+      \\"column\\": 7
     }
   }
 });
 __replicad__errors__.append({
-  \\"message\\": \\"'Nets' called without being assigned to variables.\\",
+  \\"message\\": \\"'Labels' called without being assigned to variables.\\",
   \\"loc\\": {
     \\"start\\": {
       \\"line\\": 2,
@@ -70,7 +70,7 @@ __replicad__errors__.append({
     },
     \\"end\\": {
       \\"line\\": 2,
-      \\"column\\": 6
+      \\"column\\": 8
     }
   }
 });

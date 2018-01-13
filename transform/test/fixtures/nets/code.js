@@ -1,3 +1,3 @@
-let [vcc, vout, gnd] = Nets();
-let vcc2 = Nets();
-let vcc3 = Net();
+let [vcc, vout, gnd] = Labels();
+let vcc2 = Labels();
+let vcc3 = Label();

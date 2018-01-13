@@ -7,25 +7,25 @@ pluginTester({
   fixtures: path.join(__dirname, 'fixtures'),
   tests: [
     {
-      title: 'add net names into Net() and Nets()',
+      title: 'add label names into Label() and Labels()',
       code: `
-        let [vcc, vout, gnd] = Nets()
-        let vout2 = Net()
+        let [vcc, vout, gnd] = Labels()
+        let vout2 = Label()
       `,
       snapshot: true,
     },
     {
       title: 'adds errors and warnings when used incorrectly',
       code: `
-        let mistake1 = Nets()
+        let mistake1 = Labels()
       `,
       snapshot: true,
     },
     {
-      title: 'bare Net and Nets cause errors',
+      title: 'bare Label and Labels cause errors',
       code: `
-        Net()
-        Nets()
+        Label()
+        Labels()
       `,
       snapshot: true,
     },

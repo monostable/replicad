@@ -1,1 +1,1 @@
-const [vcc, gnd] = ['vcc', 'gnd'].map(n => Net(n));
+const [vcc, gnd] = ['vcc', 'gnd'].map(n => Label(n));

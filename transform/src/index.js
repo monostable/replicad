@@ -1,14 +1,14 @@
 const {types: t} = require('@babel/core');
 const {default: template} = require('@babel/template');
 const toAst = require('babel-literal-to-ast');
-const nodePath = require('path')
+const nodePath = require('path');
 
 const ERROR = '__replicad__errors__';
 const WARN = '__replicad__warnings__';
 
 function moduleName(p) {
   const ext = nodePath.extname(p);
-  return nodePath.basename(p).replace(RegExp('\\' + ext + '$'), '')
+  return nodePath.basename(p).replace(RegExp('\\' + ext + '$'), '');
 }
 
 module.exports = function() {
@@ -34,7 +34,7 @@ module.exports = function() {
 
   function addLabelNames(path) {
     const callee = path.node.callee.name;
-    const components = [ 'Component', 'Resistor', 'Capacitor'];
+    const components = ['Component', 'Resistor', 'Capacitor'];
     const labels = ['Label', 'Power', 'Ground', 'Input', 'Output'];
     if (callee === 'Labels') {
       if (path.node.arguments.length === 0) {
