@@ -1,13 +1,4 @@
-const {
-  Resistor,
-  Circuit,
-  Net,
-  Nets,
-  Power,
-  Ground,
-  Output,
-  Input,
-} = require('../lib');
+const {Resistor, Circuit, Power, Ground, Output} = require('../lib');
 
 function resistor_divider(value1, value2) {
   const r1 = Resistor(value1);
@@ -24,6 +15,4 @@ function resistor_divider(value1, value2) {
   return circuit;
 }
 
-const circuit = resistor_divider('1k', '500 ohm');
-console.log(circuit)
-console.log(JSON.stringify(circuit.toYosys(), null, 2));
+module.exports = resistor_divider;
