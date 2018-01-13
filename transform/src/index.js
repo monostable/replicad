@@ -34,8 +34,8 @@ module.exports = function() {
 
   function addLabelNames(path) {
     const callee = path.node.callee.name;
-    const components = ['Resistor', 'Capacitor', 'Component'];
-    const nets = ['Label', 'Power', 'Ground', 'Input', 'Output'];
+    const components = [ 'Component', 'Resistor', 'Capacitor'];
+    const labels = ['Label', 'Power', 'Ground', 'Input', 'Output'];
     if (callee === 'Labels') {
       if (path.node.arguments.length === 0) {
         if (path.parent.type !== 'VariableDeclarator') {
@@ -51,7 +51,7 @@ module.exports = function() {
           error(parent, "'Labels' called without array pattern.");
         }
       }
-    } else if (callee === 'Circuit' || nets.includes(callee)) {
+    } else if (callee === 'Circuit' || labels.includes(callee)) {
       if (path.node.arguments.length === 0) {
         if (path.parent.type !== 'VariableDeclarator') {
           error(path, `'${callee}' called without being assigned to variable.`);
