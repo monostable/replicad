@@ -1,8 +1,8 @@
-const {Capacitor, Resistor, Circuit, Net, Nets} = require('../lib')
+const {Capacitor, Resistor, Circuit, Label, Labels} = require('../lib')
 const r1 = Resistor('1k')
 const c1 = Capacitor('1uF')
 
-const [vin, vout, gnd] = Nets()
+const [vin, vout, gnd] = Labels()
 
 const circuit = Circuit()
 

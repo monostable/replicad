@@ -32,14 +32,14 @@ module.exports = function() {
     path.insertAfter(ast);
   }
 
-  function addNetNames(path) {
+  function addLabelNames(path) {
     const callee = path.node.callee.name;
     const components = ['Resistor', 'Capacitor', 'Component'];
-    const nets = ['Net', 'Power', 'Ground', 'Input', 'Output'];
-    if (callee === 'Nets') {
+    const nets = ['Label', 'Power', 'Ground', 'Input', 'Output'];
+    if (callee === 'Labels') {
       if (path.node.arguments.length === 0) {
         if (path.parent.type !== 'VariableDeclarator') {
-          error(path, "'Nets' called without being assigned to variables.");
+          error(path, "'Labels' called without being assigned to variables.");
           return;
         }
         if (path.parent.id.type === 'ArrayPattern') {
@@ -48,7 +48,7 @@ module.exports = function() {
           path.node.arguments = [a];
         } else {
           const parent = path.parentPath.parentPath;
-          error(parent, "'Nets' called without array pattern.");
+          error(parent, "'Labels' called without array pattern.");
         }
       }
     } else if (callee === 'Circuit' || nets.includes(callee)) {
@@ -87,7 +87,7 @@ module.exports = function() {
       prependLog(path);
     },
     CallExpression(path) {
-      addNetNames(path);
+      addLabelNames(path);
     },
   };
 
