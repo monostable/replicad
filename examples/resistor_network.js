@@ -11,7 +11,6 @@ const gnd = Ground()
 
 const vout = Output()
 
-circuit.connect(vcc, div1.vcc)
-circuit.connect(vcc, div2.vcc)
+circuit.connect(vcc, div1.vcc, div2.vcc)
 
 console.log(circuit)
