@@ -15,4 +15,9 @@ function resistor_divider(value1, value2) {
   return circuit;
 }
 
-module.exports = resistor_divider;
+if (require.main === module) {
+  const circuit = resistor_divider('1k', '500 ohm');
+  console.log(JSON.stringify(circuit.toYosys(), null, 2))
+} else {
+  module.exports = resistor_divider;
+}
