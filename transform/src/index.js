@@ -89,6 +89,9 @@ module.exports = function() {
     CallExpression(path) {
       addLabelNames(path);
     },
+    FunctionDeclaration(path) {
+      console.log(path.scope);
+    },
   };
 
   return {
