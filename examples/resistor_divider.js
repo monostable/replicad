@@ -1,23 +1,21 @@
-const {Resistor, Circuit, Power, Ground, Output} = require('../lib');
+const __replicad__warnings__ = [];
+const __replicad__errors__ = [];
 
-class ResistorDivider extends Circuit {
-  constructor(name, value1, value2) {
-    super(name)
-    const r1 = Resistor(value1);
-    const r2 = Resistor(value2);
+const {
+  Power,
+  Ground,
+  Output,
+  Circuit
+} = require('../lib');
 
-    const vcc = Power();
-    const gnd = Ground();
+const ResistorDivider = require('./resistor_divider');
 
-    const vout = Output();
+const div1 = new ResistorDivider('div1', '1k', '500 ohm');
+const div2 = new ResistorDivider('div2', '2k', '3k');
+const circuit = Circuit("resistor_network.circuit");
+const vcc = Power("vcc");
+const gnd = Ground("gnd");
+const vout = Output("vout");
+circuit.connect(vcc, div1.vcc, div2.vcc);
+console.log(circuit);
 
-    this.chain(vcc, r1, vout, r2, gnd);
-  }
-}
-
-if (require.main === module) {
-  const circuit = new ResistorDivider('1k', '500 ohm');
-  console.log(JSON.stringify(circuit.toYosys(), null, 2));
-} else {
-  module.exports = ResistorDivider;
-}
