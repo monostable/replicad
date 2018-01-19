@@ -244,13 +244,6 @@ babel-messages@^6.23.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-transform-replicad@./transform:
-  version "1.0.0"
-  dependencies:
-    "@babel/core" "^7.0.0-beta.36"
-    "@babel/template" "^7.0.0-beta.37"
-    babel-literal-to-ast "^1.0.0"
-
 babel-plugin-transform-replicad@./transform/:
   version "1.0.0"
   dependencies:
@@ -1345,6 +1338,10 @@ tunnel-agent@^0.6.0:
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
+
+typescript@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
 
 uid-number@^0.0.6:
   version "0.0.6"

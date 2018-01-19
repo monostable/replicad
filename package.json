@@ -8,5 +8,7 @@
   "scripts": {
     "examples": "for f in examples/*.js; do babel-node \"$f\"; done"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "typescript": "^2.6.2"
+  }
 }

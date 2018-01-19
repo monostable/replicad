@@ -1,16 +1,26 @@
 class Pin {
-  constructor(component, name) {
+  name: string;
+  component: Component;
+  direction: string;
+  constructor(name, component) {
+    if (!(this instanceof Pin)) {
+      return new Pin(name, Component);
+    }
     this.name = name;
     this.component = component;
   }
 }
-Pin = bindNew(Pin);
 
 class Component {
+  name: string;
+  pins: Array<Pin>;
+  pin1: Pin;
+  pin2: Pin;
+  value: string;
   constructor(name, description) {
     this.name = name;
     this.value = description;
-    this.pins = [Pin(this, 0), Pin(this, 1)];
+    this.pins = [new Pin(0, this), new Pin(1, this)];
     this.pin1 = this.pins[0];
     this.pin2 = this.pins[1];
   }
@@ -28,7 +38,7 @@ class Component {
 
 class Resistor extends Component {
   constructor(name, description) {
-    super('resistor ' + description, name);
+    super(name, 'resistor ' + description);
   }
 }
 
@@ -38,54 +48,52 @@ class Capacitor extends Component {
   }
 }
 
-Component = bindNew(Component);
-Resistor = bindNew(Resistor);
-Capacitor = bindNew(Capacitor);
-
 class Label {
+  name: string;
+  direction: string;
   constructor(name) {
     this.name = name;
   }
 }
-Label = bindNew(Label);
 
 class Power extends Label {
   constructor(name) {
     super(name);
   }
 }
-Power = bindNew(Power);
 
 class Ground extends Label {
   constructor(name) {
     super(name);
   }
 }
-Ground = bindNew(Ground);
 
 class Input extends Label {
   constructor(name) {
     super(name);
   }
 }
-Input = bindNew(Input);
 
 class Output extends Label {
   constructor(name) {
     super(name);
   }
 }
-Output = bindNew(Output);
 
-function Labels(names) {
-  return names.map(n => Label(n));
+function Labels(names: Array<string>): Array<Label> {
+  return names.map(n => new Label(n));
 }
 
-function pinOrLabel(x) {
+function pinOrLabel(x: any): boolean {
   return x instanceof Label || x instanceof Pin;
 }
 
 class Circuit {
+  name: string;
+  components: Array<Component>;
+  labels: Array<Label>;
+  nets: Array<Array<Pin | Label>>;
+  subcircuits: Array<Circuit>
   constructor(name) {
     this.name = name;
     this.components = [];
@@ -94,9 +102,10 @@ class Circuit {
     this.nets = [];
   }
   chain() {
+    const args = arguments;
     Array.prototype.slice.call(arguments).forEach((two, i) => {
       if (i > 0) {
-        let one = arguments[i - 1];
+        let one = args[i - 1];
         this._add(one);
         this._add(two);
         // out of the first and into the second
@@ -111,9 +120,10 @@ class Circuit {
     });
   }
   connect() {
+    const args = arguments;
     Array.prototype.slice.call(arguments).forEach((two, i) => {
       if (i > 0) {
-        let one = arguments[i - 1];
+        let one = args[i - 1];
         // connect the tops of both
         if (!pinOrLabel(one)) {
           one = one.pins[0];
@@ -148,7 +158,8 @@ class Circuit {
       c = c.component;
     }
     if (
-      !this.components.concat(this.labels).includes(c) &&
+      !this.labels.includes(c) &&
+      !this.components.includes(c) &&
       !this.subcircuits.includes(c.circuit)
     ) {
       // add the component or its corresponding circuit if it's already in a
@@ -237,25 +248,8 @@ class Circuit {
     };
   }
 }
-Circuit = bindNew(Circuit);
 
-function bindNew(Class) {
-  function _Class() {
-    for (
-      var len = arguments.length, rest = Array(len), key = 0;
-      key < len;
-      key++
-    ) {
-      rest[key] = arguments[key];
-    }
-
-    return new (Function.prototype.bind.apply(Class, [null].concat(rest)))();
-  }
-  _Class.prototype = Class.prototype;
-  return _Class;
-}
-
-function incrementRef(str) {
+function incrementRef(str: string): string {
   const ns = str.split(/\D/);
   const lastN = ns[ns.length - 1];
   const n = parseInt(lastN);
@@ -265,7 +259,7 @@ function incrementRef(str) {
   return str.slice(0, str.lastIndexOf(lastN)) + String(n + 1);
 }
 
-module.exports = {
+export {
   Capacitor,
   Resistor,
   Circuit,
