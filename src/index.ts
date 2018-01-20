@@ -1,4 +1,4 @@
-class Pin {
+export class Pin {
   name: string;
   component: Component;
   direction: string;
@@ -11,7 +11,7 @@ class Pin {
   }
 }
 
-class Component {
+export class Component {
   name: string;
   pins: Array<Pin>;
   pin1: Pin;
@@ -36,19 +36,19 @@ class Component {
   }
 }
 
-class Resistor extends Component {
+export class Resistor extends Component {
   constructor(name, description) {
     super(name, 'resistor ' + description);
   }
 }
 
-class Capacitor extends Component {
+export class Capacitor extends Component {
   constructor(name, description) {
     super(name, 'capacitor ' + description);
   }
 }
 
-class Label {
+export class Label {
   name: string;
   direction: string;
   constructor(name) {
@@ -56,25 +56,25 @@ class Label {
   }
 }
 
-class Power extends Label {
+export class Power extends Label {
   constructor(name) {
     super(name);
   }
 }
 
-class Ground extends Label {
+export class Ground extends Label {
   constructor(name) {
     super(name);
   }
 }
 
-class Input extends Label {
+export class Input extends Label {
   constructor(name) {
     super(name);
   }
 }
 
-class Output extends Label {
+export class Output extends Label {
   constructor(name) {
     super(name);
   }
@@ -88,7 +88,7 @@ function pinOrLabel(x: any): boolean {
   return x instanceof Label || x instanceof Pin;
 }
 
-class Circuit {
+export class Circuit {
   name: string;
   components: Array<Component>;
   labels: Array<Label>;
@@ -258,15 +258,3 @@ function incrementRef(str: string): string {
   }
   return str.slice(0, str.lastIndexOf(lastN)) + String(n + 1);
 }
-
-export {
-  Capacitor,
-  Resistor,
-  Circuit,
-  Label,
-  Labels,
-  Power,
-  Ground,
-  Output,
-  Input,
-};

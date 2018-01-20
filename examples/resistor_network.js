@@ -1,16 +1,16 @@
 const {Power, Ground, Output, Circuit} = require('../lib');
 const ResistorDivider = require('./resistor_divider');
 
-const div1 = new ResistorDivider('div1', '1k', '500 ohm');
-const div2 = new ResistorDivider('div2', '2k', '3k');
+const div1 = ResistorDivider('div1', '1k', '500 ohm');
+const div2 = ResistorDivider('div2', '2k', '3k');
 
-const circuit = Circuit();
+const circuit = new Circuit();
 
-const vcc = Power()
-const gnd = Ground()
+const vcc = new Power('vcc');
+const gnd = new Ground('gnd');
 
-const vout = Output()
+const vout = new Output('vout');
 
-circuit.connect(vcc, div1.vcc, div2.vcc)
+circuit.connect(vcc, div1.vcc, div2.vcc);
 
-console.log(circuit)
+console.log(circuit);

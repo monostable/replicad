@@ -1,21 +1,22 @@
-const __replicad__warnings__ = [];
-const __replicad__errors__ = [];
+const {Resistor, Circuit, Power, Ground, Output} = require('../lib');
 
-const {
-  Power,
-  Ground,
-  Output,
-  Circuit
-} = require('../lib');
+function ResistorDivider(name, value1, value2) {
+  const r1 = new Resistor('r1', value1);
+  const r2 = new Resistor('r2', value2);
 
-const ResistorDivider = require('./resistor_divider');
+  const vcc = new Power();
+  const gnd = new Ground();
 
-const div1 = new ResistorDivider('div1', '1k', '500 ohm');
-const div2 = new ResistorDivider('div2', '2k', '3k');
-const circuit = Circuit("resistor_network.circuit");
-const vcc = Power("vcc");
-const gnd = Ground("gnd");
-const vout = Output("vout");
-circuit.connect(vcc, div1.vcc, div2.vcc);
-console.log(circuit);
+  const vout = new Output();
 
+  const circuit = Circuit();
+  circuit.chain(vcc, r1, vout, r2, gnd);
+  return circuit;
+}
+
+if (require.main === module) {
+  const circuit = ResistorDivider('div', '1k', '500 ohm');
+  console.log(JSON.stringify(circuit.toYosys(), null, 2));
+} else {
+  module.exports = ResistorDivider;
+}
