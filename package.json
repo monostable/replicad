@@ -6,7 +6,7 @@
     "babel-plugin-transform-replicad": "./transform/"
   },
   "scripts": {
-    "examples": "for f in examples/*.js; do babel-node \"$f\"; done"
+    "examples": "for f in examples/*.js; do node \"$f\"; done"
   },
   "devDependencies": {}
 }
