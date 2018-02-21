@@ -1,0 +1,36 @@
+Arguments: 
+  /home/kaspar/.nvm/versions/node/v8.9.4/bin/node /usr/share/yarn/bin/yarn.js init
+
+PATH: 
+  /home/kaspar/projects/replicad/replicad/transform/node_modules/.bin:/home/kaspar/projects/replicad/replicad/transform/.cabal-sandbox/bin:/home/kaspar/projects/replicad/replicad/transform/bin:/home/kaspar/projects/replicad/replicad/transform/venv/bin:/home/kaspar/.nvm/versions/node/v8.9.4/bin:/opt/Popcorntime/:/usr/local/heroku/bin:/home/kaspar/.config/yarn/global/node_modules/.bin:/home/kaspar/.local/bin:/home/kaspar/opt/flow:/home/kaspar/projects/opt/eagle-7.5.0/bin:/home/kaspar/opt/ghc/8.2.1/bin:/home/kaspar/.cabal/bin:/home/kaspar/scripts:/home/kaspar/node_modules/.bin:/opt/eagle-7.5.0/bin:/home/kaspar/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/kaspar/.fzf/bin
+
+Yarn version: 
+  1.3.2
+
+Node version: 
+  8.9.4
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/usr/share/yarn/lib/cli.js:121045:13)
+      at emitNone (events.js:106:13)
+      at Interface.emit (events.js:208:7)
+      at Interface._ttyWrite (readline.js:775:16)
+      at ReadStream.onkeypress (readline.js:160:10)
+      at emitTwo (events.js:126:13)
+      at ReadStream.emit (events.js:214:7)
+      at emitKeys (internal/readline.js:420:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1011:36)
