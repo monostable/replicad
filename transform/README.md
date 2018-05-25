@@ -3,11 +3,11 @@
 npm i ttypescript -D
 ```
 
-## Run 
+## Run
 ```
 npx ts-node -C ttypescript test.ts
 ```
-Or 
+Or
 ```
 npx ttsc
 ```
