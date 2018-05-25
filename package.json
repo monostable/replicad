@@ -1,12 +1,11 @@
 {
-  "dependencies": {
-    "@types/node": "^10.1.2",
-    "ts-simple-ast": "^11.2.0",
-    "ttypescript": "^1.4.2",
-    "typescript": "^2.8.3"
-  },
+  "dependencies": {},
   "scripts": {
-    "examples": "for f in examples/*.ts; do ts-node --compiler ttypescript \"$f\"; done"
+    "examples": "for f in examples/*.ts; do ts-node transform.ts \"$f\"; done"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "ts-node": "^6.0.5",
+    "ts-simple-ast": "^11.2.0",
+    "typescript": "^2.8.3"
+  }
 }
