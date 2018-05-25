@@ -6,7 +6,7 @@ var c1 = new index_1.Capacitor('1uF');
 var vin = new index_1.Input();
 var vout = new index_1.Output();
 var gnd = new index_1.Ground();
-var x = {};
+var x = { circuit: null };
 x.circuit = new index_1.Circuit();
 x.circuit.connect([((vin.name = 'vin'), vin), ((r1.name = 'r1'), r1)]);
 x.circuit.connect([
@@ -14,6 +14,5 @@ x.circuit.connect([
     ((vout.name = 'vout'), vout),
     ((c1.name = 'c1'), c1),
 ]);
-circuit.connect([((c1.name = 'c1'), c1.pin2), ((gnd.name = 'gnd'), gnd)]);
-console.log(JSON.stringify(circuit.toYosys(), null, 2));
-exports["default"] = x;
+x.circuit.connect([((c1.name = 'c1'), c1.pin2), ((gnd.name = 'gnd'), gnd)]);
+console.log(JSON.stringify(x.circuit.toYosys(), null, 2));
