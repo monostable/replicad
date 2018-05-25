@@ -22,16 +22,17 @@ calls.forEach(call => {
       .getText() === 'Circuit'
   ) {
     call.getArguments().forEach(arg => {
-      let name = arg.getText();
+      let original = arg.getText();
+      let v = original;
       //if it's an object prop get the object name
       if (arg.getKind() === ts.SyntaxKind.PropertyAccessExpression) {
         let e = arg.getExpression();
         while (e.getKind() === ts.SyntaxKind.PropertyAccessExpression) {
           e = e.getExpression();
         }
-        name = e.getText();
+        v = e.getText();
       }
-      arg.replaceWithText(`(${name}.name = '${name}', ${arg.getText()})`);
+      arg.replaceWithText(`(${v}.name = '${v}', ${arg.getText()})`);
     });
   }
 });
