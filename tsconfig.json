@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
     "plugins": [
       {
-        "transform": "./transform/src/index.ts"
+        "transform": "./transform/index.ts"
       }
-    ]
+    ],
+    "lib": ["ES2017"]
   },
   "exclude": ["./transform/**/*"]
 }

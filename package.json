@@ -1,14 +1,12 @@
 {
   "dependencies": {
-    "@babel/cli": "^7.0.0-beta.37",
-    "@babel/core": "^7.0.0-beta.37",
-    "@babel/node": "^7.0.0-beta.37",
-    "babel-plugin-transform-replicad": "./transform/",
+    "@types/node": "^10.1.2",
+    "ts-simple-ast": "^11.2.0",
     "ttypescript": "^1.4.2",
     "typescript": "^2.8.3"
   },
   "scripts": {
-    "examples": "for f in examples/*.js; do ts-node \"$f\"; done"
+    "examples": "for f in examples/*.ts; do ts-node --compiler ttypescript \"$f\"; done"
   },
   "devDependencies": {}
 }
