@@ -11,6 +11,7 @@ const gnd = new Ground()
 
 const vout = new Output()
 
-circuit.connect(vcc, div1, div2)
+circuit.connect(vcc, div1.vcc, div2.vcc)
+circuit.connect(gnd, div1.gnd, div2.gnd)
 
-console.log(circuit)
+export default circuit

@@ -56,7 +56,7 @@ function addNames(sourceFiles) {
           const original = arg.getText()
           let v = original
           if (arg.getKind() === ts.SyntaxKind.PropertyAccessExpression) {
-            v = getObjectVariableName(e)
+            v = getObjectVariableName(arg)
           }
           arg.replaceWithText(`(${v}.name = '${v}', ${arg.getText()})`)
         })
