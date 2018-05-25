@@ -1,12 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "plugins": [
-      {
-        "transform": "./transform/index.ts"
-      }
-    ],
-    "lib": ["ES2017"]
+    "target": "es2017",
+    "lib": ["es2017"]
   },
-  "exclude": ["./transform/**/*"]
+  "exclude": ["./transform.ts"]
 }

@@ -97,7 +97,7 @@ class Circuit {
     this._add = this._add.bind(this);
     this.toYosys = this.toYosys.bind(this);
   }
-  chain(elements) {
+  chain(...elements: any[]) {
     elements.forEach((two, i) => {
       if (i > 0) {
         let one = elements[i - 1];
