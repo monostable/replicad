@@ -1,12 +1,12 @@
 const {Capacitor, Resistor, Circuit, Input, Output, Ground} = require('../lib');
-const r1 = Resistor('1k');
-const c1 = Capacitor('1uF');
+const r1 = new Resistor('1k');
+const c1 = new Capacitor('1uF');
 
-const vin = Input();
-const vout = Output();
-const gnd = Ground();
+const vin = new Input();
+const vout = new Output();
+const gnd = new Ground();
 
-const circuit = Circuit();
+const circuit = new Circuit();
 
 circuit.connect([((vin.name = 'vin'), vin), ((r1.name = 'r1'), r1)]);
 circuit.connect([

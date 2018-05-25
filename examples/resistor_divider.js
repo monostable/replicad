@@ -1,15 +1,15 @@
 const {Resistor, Circuit, Power, Ground, Output} = require('../lib');
 
 function resistorDivider(value1, value2) {
-  const r1 = Resistor(value1);
-  const r2 = Resistor(value2);
+  const r1 = new Resistor(value1);
+  const r2 = new Resistor(value2);
 
-  const vcc = Power();
-  const gnd = Ground();
+  const vcc = new Power();
+  const gnd = new Ground();
 
-  const vout = Output();
+  const vout = new Output();
 
-  const circuit = Circuit();
+  const circuit = new Circuit();
   circuit.chain([
     ((vcc.name = 'vcc'), vcc),
     ((r1.name = 'r1'), r1),

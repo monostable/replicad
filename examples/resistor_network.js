@@ -4,12 +4,12 @@ const resistorDivider = require('./resistor_divider');
 const div1 = resistorDivider('1k', '500 ohm');
 const div2 = resistorDivider('2k', '3k');
 
-const circuit = Circuit();
+const circuit = new Circuit();
 
-const vcc = Power();
-const gnd = Ground();
+const vcc = new Power();
+const gnd = new Ground();
 
-const vout = Output();
+const vout = new Output();
 
 circuit.connect([
   ((vcc.name = 'vcc'), vcc),
