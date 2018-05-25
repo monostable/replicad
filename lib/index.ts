@@ -114,7 +114,7 @@ class Circuit {
       }
     });
   }
-  connect(elements) {
+  connect(...elements: any[]) {
     elements.forEach((two, i) => {
       if (i > 0) {
         let one = elements[i - 1];
