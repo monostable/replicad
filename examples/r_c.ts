@@ -16,8 +16,6 @@ const gnd = new Ground()
 
 const circuit = new Circuit()
 
-circuit.connect(vin, r1)
-circuit.connect(r1.pin2, vout, c1)
-circuit.connect(c1.pin2, gnd)
+circuit.chain(vin, r1, vout, c1, gnd)
 
 export default circuit

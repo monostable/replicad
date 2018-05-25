@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:s="https://github.com/nturley/netlistsvg" width="125" height="237">
+  <style>svg {
+    stroke: #000;
+    fill: none;
+  }
+  text {
+    fill: #000;
+    stroke: none;
+    font-size: 10px;
+    font-weight: bold;
+    font-family: "Courier New", monospace;
+  }
+  .nodelabel {
+    text-anchor: middle;
+  }
+  .inputPortLabel {
+    text-anchor: end;
+  }
+  .splitjoinBody {
+    fill: #000;
+  }
+  .symbol {
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-width: 2;
+  }
+  .detail {
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: #000;
+  }</style>
+  <g s:type="inputExt" s:width="30" s:height="20" transform="translate(12,16)">
+    <text x="15" y="-4" class="nodelabel" s:attribute="ref">vin</text>
+    <s:alias val="$_inputExt_"/>
+    <path d="M0,0 V20 H15 L30,10 15,0 Z"/>
+    <g s:x="30" s:y="10" s:pid="Y" s:dir="lateral"/>
+  </g>
+  <g s:type="outputExt" s:width="30" s:height="20" transform="translate(71,100)">
+    <text x="15" y="-4" class="nodelabel" s:attribute="ref">vout</text>
+    <s:alias val="$_outputExt_"/>
+    <path d="M30,0 V20 H15 L0,10 15,0 Z"/>
+    <g s:x="0" s:y="10" s:pid="A" s:dir="lateral"/>
+  </g>
+  <g s:type="gnd" s:width="20" s:height="30" transform="translate(51,195)">
+    <s:alias val="gnd"/>
+    <path d="M0,0 H20 M3,5 H17 M7,10 H13 M10,0 V-15"/>
+    <g s:x="10" s:y="-15" s:pid="A"/>
+  </g>
+  <g s:type="resistor_v" s:width="10" s:height="50" transform="translate(56,41)">
+    <s:alias val="r_v"/>
+    <path d="M0,10 V40 H10 V10 Z" class="symbol"/>
+    <path d="M5,0 V10 M5,40 V50" class="connect"/>
+    <g s:x="5" s:y="0" s:pid="A"/>
+    <g s:x="5" s:y="50" s:pid="B"/>
+  </g>
+  <g s:type="capacitor_v" s:width="30" s:height="50" transform="translate(46,125)">
+    <s:alias val="c_v"/>
+    <path d="M0,20 H30 M0,30 H30" class="symbol"/>
+    <path d="M15,0 V20 M15,30 V50" class="connect"/>
+    <g s:x="15" s:y="0" s:pid="A"/>
+    <g s:x="15" s:y="50" s:pid="B"/>
+  </g>
+  <line x1="61" y1="175" x2="61" y2="180"/>
+  <line x1="42" y1="26" x2="61" y2="26"/>
+  <line x1="61" y1="26" x2="61" y2="41"/>
+  <line x1="61" y1="91" x2="61" y2="110"/>
+  <circle cx="61" cy="110" r="2" style="fill:#000"/>
+  <line x1="61" y1="110" x2="71" y2="110"/>
+  <line x1="71" y1="110" x2="61" y2="110"/>
+  <circle cx="61" cy="110" r="2" style="fill:#000"/>
+  <line x1="61" y1="110" x2="61" y2="125"/>
+</svg>
+

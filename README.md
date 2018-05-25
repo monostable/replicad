@@ -2,7 +2,7 @@
 
 _work in progress_
 
-Design circuits using Javascript.
+Design circuits using Javascript/Typescript.
 
 
 ## Goals
@@ -17,10 +17,48 @@ Design circuits using Javascript.
 
 _work in progress_
 
-- A [Babel](http://babeljs.io) transform (in `./transform`) to bind variable names as schematic references and provide error messages.
+- A transform to bind variable names as schematic references
 - A library (in `./lib`) that provides classes for circuit description.
-- Creating a circuit involves instantiating the `Circuit` class and then adding connections to it.
+- Creating a circuit involves instantiating the `Circuit` class and then adding connections to it and exporting it.
 
+## Example
+
+```js
+import {
+  Capacitor,
+  Resistor,
+  Circuit,
+  Input,
+  Output,
+  Ground
+} from "../lib/index"
+
+const r1 = new Resistor("1k")
+const c1 = new Capacitor("1uF")
+
+const vin = new Input()
+const vout = new Output()
+const gnd = new Ground()
+
+const circuit = new Circuit()
+
+circuit.chain(vin, r1, vout, r2, gnd)
+
+export default circuit
+```
+
+Output:
+
+![](examples/r_c.svg)
+
+
+## Try it out
+
+
+```
+npm install
+npx ./replicad examples/r_c.ts > out.svg
+```
 
 ## Related Work
 

@@ -1,11 +1,12 @@
 {
-  "dependencies": {},
+  "dependencies": {
+    "ts-node": "^6.0.5",
+    "ts-simple-ast": "^11.2.0",
+    "typescript": "^2.8.3",
+    "netlistsvg": "https://github.com/nturley/netlistsvg"
+  },
   "scripts": {
     "examples": "for f in examples/*.ts; do ts-node transform.ts \"$f\"; done"
   },
-  "devDependencies": {
-    "ts-node": "^6.0.5",
-    "ts-simple-ast": "^11.2.0",
-    "typescript": "^2.8.3"
-  }
+  "devDependencies": {}
 }

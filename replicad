@@ -1,0 +1,76 @@
+#!/usr/bin/env ts-node
+const Project = require("ts-simple-ast").default
+const ts = require("typescript")
+const path = require("path")
+const fs = require("fs")
+const netlistsvg = require("netlistsvg")
+
+const inputPath = process.argv[2]
+
+if (inputPath == null) {
+  console.error("USAGE: replicad <input>.ts")
+  process.exit(1)
+}
+
+const project = new Project({
+  tsConfigFilePath: "./tsconfig.json",
+  addFilesFromTsConfig: false
+})
+
+project.addExistingSourceFiles(inputPath)
+const sourceFiles = project.getSourceFiles()
+
+addNames(sourceFiles)
+
+const circuit = require("./" + inputPath.replace(/\.ts$/, ".js")).default
+const netlist = circuit.toYosys()
+
+const skinPath = path.join(__dirname, "node_modules/netlistsvg/lib/analog.svg")
+fs.readFile(skinPath, function(err, skinData) {
+  if (err) throw err
+  netlistsvg.render(skinData, netlist, function(err, svg_data) {
+    if (err) throw err
+    console.log(svg_data)
+  })
+})
+
+function addNames(sourceFiles) {
+  sourceFiles.forEach(f => {
+    const imports = f
+      .getImportDeclarations()
+      .map(i => i.getModuleSpecifierSourceFile())
+    addNames(imports)
+
+    const calls = f.getDescendantsOfKind(ts.SyntaxKind.CallExpression)
+    calls.forEach(call => {
+      const e = call.getExpression()
+      if (
+        e.getKind() === ts.SyntaxKind.PropertyAccessExpression &&
+        (e.getName() === "connect" || e.getName() === "chain") &&
+        e
+          .getExpression()
+          .getType()
+          .getText() === "Circuit"
+      ) {
+        call.getArguments().forEach(arg => {
+          const original = arg.getText()
+          let v = original
+          if (arg.getKind() === ts.SyntaxKind.PropertyAccessExpression) {
+            v = getObjectVariableName(e)
+          }
+          arg.replaceWithText(`(${v}.name = '${v}', ${arg.getText()})`)
+        })
+      }
+    })
+    const emitResult = f.emit()
+    for (const diagnostic of emitResult.getDiagnostics())
+      console.error(diagnostic.getMessageText())
+  })
+}
+
+function getObjectVariableName(e) {
+  while (e.getKind() === ts.SyntaxKind.PropertyAccessExpression) {
+    e = e.getExpression()
+  }
+  return e.getText()
+}
