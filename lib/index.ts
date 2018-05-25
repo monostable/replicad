@@ -1,4 +1,7 @@
 class Pin {
+  name: string;
+  component: Component;
+  direction: string;
   constructor(component, name) {
     this.name = name;
     this.component = component;
@@ -6,6 +9,11 @@ class Pin {
 }
 
 class Component {
+  name: string;
+  pins: Array<Pin>;
+  pin1: Pin;
+  pin2: Pin;
+  value: string;
   constructor(description) {
     this.value = description;
     this.pins = [new Pin(this, 0), new Pin(this, 1)];
@@ -39,6 +47,8 @@ class Capacitor extends Component {
 }
 
 class Label {
+  name: string;
+  direction: string;
   constructor() {}
 }
 
@@ -71,6 +81,11 @@ function pinOrLabel(x) {
 }
 
 class Circuit {
+  name: string;
+  components: Array<Component>;
+  labels: Array<Label>;
+  nets: Array<Array<Pin | Label>>;
+  subcircuits: Array<Circuit>;
   constructor() {
     this.components = [];
     this.labels = [];
@@ -137,7 +152,8 @@ class Circuit {
       x = x.component;
     }
     if (
-      !this.components.concat(this.labels).includes(x) &&
+      !this.components.includes(x) &&
+      !this.labels.includes(x) &&
       !this.subcircuits.includes(x.circuit)
     ) {
       // add the component or its corresponding circuit if it's already in a
@@ -237,7 +253,7 @@ function incrementRef(str) {
   return str.slice(0, str.lastIndexOf(lastN)) + String(n + 1);
 }
 
-module.exports = {
+export {
   Capacitor,
   Resistor,
   Circuit,
