@@ -2,6 +2,7 @@ import {
   Capacitor,
   Resistor,
   Circuit,
+  Label,
   Input,
   Output,
   Ground

@@ -11,8 +11,6 @@ class Pin {
 class Component {
   name: string
   pins: Array<Pin>
-  pin1: Pin
-  pin2: Pin
   value: string
   constructor(description, number_of_pins = 2) {
     this.value = description
@@ -20,7 +18,6 @@ class Component {
     for (let i = 0; i < number_of_pins; i++) {
       const pin = new Pin(this, i)
       this.pins.push(pin)
-      this[`pin${i + 1}`] = pin
     }
     this.copy = this.copy.bind(this)
     this.equals = this.equals.bind(this)
@@ -219,7 +216,7 @@ class Circuit {
       }
     }
     for (const c of this.components) {
-      const pinNames = ["A", "B"]
+      const pinNames = ["A", "B", "C"]
       const types = { Resistor: "r_v", Capacitor: "c_v" }
       const connections = c.pins
         .map(p => ({
@@ -230,7 +227,7 @@ class Circuit {
         .map(p => ({ [pinNames[p.name]]: p.direction }))
         .reduce((p, o) => Object.assign(p, o), {})
       cells[c.name] = {
-        type: types[c.constructor.name],
+        type: types[c.constructor.name] || "",
         port_directions,
         connections
       }
@@ -256,4 +253,4 @@ function incrementRef(str) {
   return str.slice(0, str.lastIndexOf(lastN)) + String(n + 1)
 }
 
-export { Capacitor, Resistor, Circuit, Label, Power, Ground, Output, Input }
+export { Component, Capacitor, Resistor, Circuit, Label, Power, Ground, Output, Input }

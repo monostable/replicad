@@ -24,6 +24,7 @@ addNames(sourceFiles)
 
 const circuit = require("./" + inputPath.replace(/\.ts$/, ".js")).default
 const netlist = circuit.toYosys()
+console.error(JSON.stringify(netlist, 2, 2))
 
 const skinPath = path.join(__dirname, "node_modules/netlistsvg/lib/analog.svg")
 fs.readFile(skinPath, function(err, skinData) {
