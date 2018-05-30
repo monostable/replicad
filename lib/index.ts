@@ -1,155 +1,158 @@
 class Pin {
-  name: string;
-  component: Component;
-  direction: string;
+  name: string
+  component: Component
+  direction: string
   constructor(component, name) {
-    this.name = name;
-    this.component = component;
+    this.name = name
+    this.component = component
   }
 }
 
 class Component {
-  name: string;
-  pins: Array<Pin>;
-  pin1: Pin;
-  pin2: Pin;
-  value: string;
-  constructor(description) {
-    this.value = description;
-    this.pins = [new Pin(this, 0), new Pin(this, 1)];
-    this.pin1 = this.pins[0];
-    this.pin2 = this.pins[1];
-    this.copy = this.copy.bind(this);
-    this.equals = this.equals.bind(this);
+  name: string
+  pins: Array<Pin>
+  pin1: Pin
+  pin2: Pin
+  value: string
+  constructor(description, number_of_pins = 2) {
+    this.value = description
+    this.pins = []
+    for (let i = 0; i < number_of_pins; i++) {
+      const pin = new Pin(this, i)
+      this.pins.push(pin)
+      this[`pin${i + 1}`] = pin
+    }
+    this.copy = this.copy.bind(this)
+    this.equals = this.equals.bind(this)
   }
   copy() {
     return Object.create(
       Object.getPrototypeOf(this),
-      Object.getOwnPropertyDescriptors(this),
-    );
+      Object.getOwnPropertyDescriptors(this)
+    )
   }
   equals(other) {
-    const sameValue = this.value === other.value;
-    return sameValue;
+    const sameValue = this.value === other.value
+    return sameValue
   }
 }
 
 class Resistor extends Component {
   constructor(description) {
-    super('resistor ' + description);
+    super("resistor " + description)
   }
 }
 
 class Capacitor extends Component {
   constructor(description) {
-    super('capacitor ' + description);
+    super("capacitor " + description)
   }
 }
 
 class Label {
-  name: string;
-  direction: string;
+  name: string
+  direction: string
   constructor() {}
 }
 
 class Power extends Label {
   constructor() {
-    super();
+    super()
   }
 }
 
 class Ground extends Label {
   constructor() {
-    super();
+    super()
   }
 }
 
 class Input extends Label {
   constructor() {
-    super();
+    super()
   }
 }
 
 class Output extends Label {
   constructor() {
-    super();
+    super()
   }
 }
 
 function pinOrLabel(x) {
-  return x instanceof Label || x instanceof Pin;
+  return x instanceof Label || x instanceof Pin
 }
 
 class Circuit {
-  name: string;
-  components: Array<Component>;
-  labels: Array<Label>;
-  nets: Array<Array<Pin | Label>>;
-  subcircuits: Array<Circuit>;
+  name: string
+  components: Array<Component>
+  labels: Array<Label>
+  nets: Array<Array<Pin | Label>>
+  subcircuits: Array<Circuit>
   constructor() {
-    this.components = [];
-    this.labels = [];
-    this.subcircuits = [];
-    this.nets = [];
-    this.chain = this.chain.bind(this);
-    this.connect = this.connect.bind(this);
-    this._connect = this._connect.bind(this);
-    this._add = this._add.bind(this);
-    this.toYosys = this.toYosys.bind(this);
+    this.components = []
+    this.labels = []
+    this.subcircuits = []
+    this.nets = []
+    this.chain = this.chain.bind(this)
+    this.connect = this.connect.bind(this)
+    this._connect = this._connect.bind(this)
+    this._add = this._add.bind(this)
+    this.toYosys = this.toYosys.bind(this)
   }
   chain(...elements: any[]) {
     elements.forEach((two, i) => {
       if (i > 0) {
-        let one = elements[i - 1];
-        this._add(one);
-        this._add(two);
+        let one = elements[i - 1]
+        this._add(one)
+        this._add(two)
         // out of the first and into the second
         if (!pinOrLabel(one)) {
-          one = one.pins[1];
+          one = one.pins[1]
         }
         if (!pinOrLabel(two)) {
-          two = two.pins[0];
+          two = two.pins[0]
         }
-        this._connect(one, two);
+        this._connect(one, two)
       }
-    });
+    })
   }
   connect(...elements: any[]) {
     elements.forEach((two, i) => {
       if (i > 0) {
-        let one = elements[i - 1];
+        let one = elements[i - 1]
         // connect the tops of both
         if (!pinOrLabel(one)) {
-          one = one.pins[0];
+          one = one.pins[0]
         }
         if (!pinOrLabel(two)) {
-          two = two.pins[0];
+          two = two.pins[0]
         }
-        this._connect(one, two);
+        this._connect(one, two)
       }
-    });
+    })
   }
   _connect(one, two) {
-    this._add(one);
-    this._add(two);
-    one.direction = 'output';
-    two.direction = 'input';
+    this._add(one)
+    this._add(two)
+    one.direction = "output"
+    two.direction = "input"
     for (const net of this.nets) {
       if (net.includes(one) && net.includes(two)) {
-        return;
+        return
       } else if (net.includes(one)) {
-        net.push(two);
-        return;
+        net.push(two)
+        return
       } else if (net.includes(two)) {
-        net.push(one);
-        return;
+        net.push(one)
+        return
       }
     }
-    this.nets.push([one, two]);
+    this.nets.push([one, two])
   }
   _add(x) {
     if (x instanceof Pin) {
-      x = x.component;
+      x = x.component
     }
     if (
       !this.components.includes(x) &&
@@ -161,105 +164,96 @@ class Circuit {
       if (x.circuit == null) {
         // we are adding a new label or component to this circuit
         while (x.name in this) {
-          x.name = incrementRef(x.name);
+          x.name = incrementRef(x.name)
         }
-        x.circuit = this;
-        this[x.name] = x;
+        x.circuit = this
+        this[x.name] = x
         if (x instanceof Component) {
-          this.components.push(x);
+          this.components.push(x)
         } else if (x instanceof Label) {
-          this.labels.push(x);
+          this.labels.push(x)
         }
       } else {
         // we are adding a new subcircuit
         while (x.circuit.name in this) {
-          x.circuit.name = incrementRef(x.circuit.name);
+          x.circuit.name = incrementRef(x.circuit.name)
         }
-        this.subcircuits.push(x.circuit);
-        this[x.circuit.name] = x.circuit;
+        this.subcircuits.push(x.circuit)
+        this[x.circuit.name] = x.circuit
       }
     }
   }
   toYosys() {
-    const ports = {};
-    const cells = {};
+    const ports = {}
+    const cells = {}
     for (const c of this.labels) {
       if (c instanceof Power) {
         cells[c.name] = {
-          type: 'vcc',
+          type: "vcc",
           port_directions: {
-            A: 'output',
+            A: "output"
           },
           connections: {
-            A: [2 + this.nets.findIndex(n => n.includes(c))],
-          },
-        };
+            A: [2 + this.nets.findIndex(n => n.includes(c))]
+          }
+        }
       } else if (c instanceof Ground) {
         cells[c.name] = {
-          type: 'gnd',
+          type: "gnd",
           port_directions: {
-            A: 'input',
+            A: "input"
           },
           connections: {
-            A: [2 + this.nets.findIndex(n => n.includes(c))],
-          },
-        };
+            A: [2 + this.nets.findIndex(n => n.includes(c))]
+          }
+        }
       } else {
         const direction =
           c instanceof Output
-            ? 'output'
-            : c instanceof Input ? 'input' : c.direction;
+            ? "output"
+            : c instanceof Input ? "input" : c.direction
         ports[c.name] = {
           direction,
-          bits: [2 + this.nets.findIndex(n => n.includes(c))],
-        };
+          bits: [2 + this.nets.findIndex(n => n.includes(c))]
+        }
       }
     }
     for (const c of this.components) {
-      const pinNames = ['A', 'B'];
-      const types = {Resistor: 'r_v', Capacitor: 'c_v'};
+      const pinNames = ["A", "B"]
+      const types = { Resistor: "r_v", Capacitor: "c_v" }
       const connections = c.pins
         .map(p => ({
-          [pinNames[p.name]]: [2 + this.nets.findIndex(n => n.includes(p))],
+          [pinNames[p.name]]: [2 + this.nets.findIndex(n => n.includes(p))]
         }))
-        .reduce((p, o) => Object.assign(p, o), {});
+        .reduce((p, o) => Object.assign(p, o), {})
       const port_directions = c.pins
-        .map(p => ({[pinNames[p.name]]: p.direction}))
-        .reduce((p, o) => Object.assign(p, o), {});
+        .map(p => ({ [pinNames[p.name]]: p.direction }))
+        .reduce((p, o) => Object.assign(p, o), {})
       cells[c.name] = {
         type: types[c.constructor.name],
         port_directions,
-        connections,
-      };
+        connections
+      }
     }
     return {
       modules: {
         [this.name]: {
           ports,
-          cells,
-        },
-      },
-    };
+          cells
+        }
+      }
+    }
   }
 }
 
 function incrementRef(str) {
-  const ns = str.split(/\D/);
-  const lastN = ns[ns.length - 1];
-  const n = parseInt(lastN);
+  const ns = str.split(/\D/)
+  const lastN = ns[ns.length - 1]
+  const n = parseInt(lastN)
   if (isNaN(n)) {
-    return str + '2';
+    return str + "2"
   }
-  return str.slice(0, str.lastIndexOf(lastN)) + String(n + 1);
+  return str.slice(0, str.lastIndexOf(lastN)) + String(n + 1)
 }
 
-export {
-  Capacitor,
-  Resistor,
-  Circuit,
-  Label,
-  Power,
-  Ground,
-  Output,
-  Input,
-};
+export { Capacitor, Resistor, Circuit, Label, Power, Ground, Output, Input }
