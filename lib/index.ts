@@ -46,6 +46,12 @@ class Capacitor extends Component {
   }
 }
 
+class Transistor extends Component {
+  constructor(description) {
+    super("transistor " + description, 3)
+  }
+}
+
 class Label {
   name: string
   direction: string
@@ -253,4 +259,15 @@ function incrementRef(str) {
   return str.slice(0, str.lastIndexOf(lastN)) + String(n + 1)
 }
 
-export { Component, Capacitor, Resistor, Circuit, Label, Power, Ground, Output, Input }
+export {
+  Component,
+  Capacitor,
+  Resistor,
+  Transistor,
+  Circuit,
+  Label,
+  Power,
+  Ground,
+  Output,
+  Input
+}
