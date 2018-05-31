@@ -14,11 +14,7 @@ if (inputPath == null) {
   process.exit(1)
 }
 
-const project = new Project({
-  tsConfigFilePath: "./tsconfig.json",
-  addFilesFromTsConfig: false
-})
-
+const project = new Project()
 project.addExistingSourceFiles(inputPath)
 const sourceFiles = project.getSourceFiles()
 
@@ -26,7 +22,6 @@ addNames(sourceFiles)
 
 const circuit = require("./" + inputPath.replace(/\.ts$/, ".js")).default
 const netlist = circuit.toYosys()
-console.error(JSON.stringify(netlist, 2, 2))
 
 const skinPath = path.join(__dirname, "node_modules/netlistsvg/lib/analog.svg")
 fs.readFile(skinPath, function(err, skinData) {
