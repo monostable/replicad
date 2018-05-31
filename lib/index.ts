@@ -229,8 +229,9 @@ class Circuit {
       }
     }
     for (const c of this.components) {
-      const pinNames = ["A", "B", "C"]
-      const types = { Resistor: "r_v", Capacitor: "c_v" }
+      const name = c.constructor.name
+      const pinNames = { Resistor: ["A", "B"], Capacitor: ["A", "B"], NPN: ["C", "B", "E"]}[name]
+      const type = { Resistor: "r_v", Capacitor: "c_v", NPN: "q_npn" }[name] || ""
       const connections = c.pins
         .map(p => ({
           [pinNames[p.name]]: [2 + this.nets.findIndex(n => n.includes(p))]
@@ -240,7 +241,7 @@ class Circuit {
         .map(p => ({ [pinNames[p.name]]: p.direction }))
         .reduce((p, o) => Object.assign(p, o), {})
       cells[c.name] = {
-        type: types[c.constructor.name] || "",
+        type,
         port_directions,
         connections
       }
