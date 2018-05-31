@@ -53,6 +53,12 @@ class Transistor extends Component {
   }
 }
 
+class NPN extends Transistor {
+  constructor(description) {
+    super("NPN " + description)
+  }
+}
+
 class Label {
   name: string
   direction: string
@@ -265,6 +271,7 @@ export {
   Capacitor,
   Resistor,
   Transistor,
+  NPN,
   Circuit,
   Label,
   Power,

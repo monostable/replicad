@@ -1,5 +1,5 @@
 import {
-  Transistor,
+  NPN,
   Resistor,
   Circuit,
   Input,
@@ -8,7 +8,7 @@ import {
   Ground
 } from "../lib/index"
 
-const q1 = new Transistor('npn')
+const q1 = new NPN()
 const r1 = new Resistor('1k')
 
 const circuit = new Circuit()
