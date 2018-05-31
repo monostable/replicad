@@ -18,6 +18,7 @@ class Component {
     for (let i = 0; i < number_of_pins; i++) {
       const pin = new Pin(this, i)
       this.pins.push(pin)
+      this[i] = pin
     }
     this.copy = this.copy.bind(this)
     this.equals = this.equals.bind(this)

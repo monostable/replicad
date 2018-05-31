@@ -18,8 +18,8 @@ const vin = new Input()
 const vout = new Output()
 const gnd = new Ground()
 
-circuit.chain(vcc, r1, vout, q1.pins[0])
-circuit.connect(vin, q1.pins[1])
-circuit.connect(q1.pins[2], gnd)
+circuit.chain(vcc, r1, vout, q1[0])
+circuit.connect(vin, q1[1])
+circuit.connect(q1[2], gnd)
 
 export default circuit

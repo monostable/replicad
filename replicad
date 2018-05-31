@@ -1,4 +1,6 @@
 #!/usr/bin/env ts-node
+// vim: filetype=typescript
+
 const Project = require("ts-simple-ast").default
 const ts = require("typescript")
 const path = require("path")
@@ -56,7 +58,10 @@ function addNames(sourceFiles) {
         call.getArguments().forEach(arg => {
           const original = arg.getText()
           let v = original
-          if (arg.getKind() === ts.SyntaxKind.PropertyAccessExpression) {
+          if (
+            arg.getKind() === ts.SyntaxKind.PropertyAccessExpression ||
+            arg.getKind() === ts.SyntaxKind.ElementAccessExpression
+          ) {
             v = getObjectVariableName(arg)
           }
           arg.replaceWithText(`(${v}.name = '${v}', ${arg.getText()})`)
@@ -64,13 +69,17 @@ function addNames(sourceFiles) {
       }
     })
     const emitResult = f.emit()
-    for (const diagnostic of emitResult.getDiagnostics())
+    for (const diagnostic of emitResult.getDiagnostics()) {
       console.error(diagnostic.getMessageText())
+    }
   })
 }
 
 function getObjectVariableName(e) {
-  while (e.getKind() === ts.SyntaxKind.PropertyAccessExpression) {
+  while (
+    e.getKind() === ts.SyntaxKind.PropertyAccessExpression ||
+    e.getKind() === ts.SyntaxKind.ElementAccessExpression
+  ) {
     e = e.getExpression()
   }
   return e.getText()
