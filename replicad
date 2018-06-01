@@ -52,13 +52,7 @@ function addNames(sourceFiles) {
       ) {
         call.getArguments().forEach(arg => {
           const original = arg.getText()
-          let v = original
-          if (
-            arg.getKind() === ts.SyntaxKind.PropertyAccessExpression ||
-            arg.getKind() === ts.SyntaxKind.ElementAccessExpression
-          ) {
-            v = getObjectVariableName(arg)
-          }
+          const v = getObjectVariableName(arg)
           arg.replaceWithText(`(${v}.name = '${v}', ${arg.getText()})`)
         })
       }
