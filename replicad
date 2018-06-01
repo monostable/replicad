@@ -7,6 +7,17 @@ const path = require("path")
 const fs = require("fs")
 const netlistsvg = require("netlistsvg")
 
+const allowed_connects = [
+  "NPN",
+  "Transistor",
+  "Resistor",
+  "Capacitor",
+  "Label",
+  "Ground",
+  "Input",
+  "Output"
+]
+
 const inputPath = process.argv[2]
 
 if (inputPath == null) {
@@ -65,11 +76,18 @@ function addNames(sourceFiles) {
 }
 
 function getObjectVariableName(e) {
+  const prev = [e]
   while (
     e.getKind() === ts.SyntaxKind.PropertyAccessExpression ||
     e.getKind() === ts.SyntaxKind.ElementAccessExpression
   ) {
     e = e.getExpression()
+    prev.push(e)
+  }
+  //if our expression is not something that can be connected to circuit, roll
+  //back to the last expression that was
+  while (!allowed_connects.includes(e.getType().getText())) {
+    e = prev.pop()
   }
   return e.getText()
 }
