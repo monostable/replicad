@@ -1,9 +1,10 @@
 {
   "dependencies": {
+    "electro-grammar": "https://github.com/monostable/electro-grammar",
+    "netlistsvg": "https://github.com/nturley/netlistsvg",
     "ts-node": "^6.0.5",
     "ts-simple-ast": "^11.2.0",
-    "typescript": "^2.8.3",
-    "netlistsvg": "https://github.com/nturley/netlistsvg"
+    "typescript": "^2.8.3"
   },
   "scripts": {
     "examples": "for f in examples/*.ts; do ts-node transform.ts \"$f\"; done"

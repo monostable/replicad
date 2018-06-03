@@ -1,3 +1,5 @@
+const electroGrammar = require("electro-grammar")
+
 class Pin {
   name: string
   component: Component
@@ -13,7 +15,9 @@ class Component {
   pins: Array<Pin>
   value: string
   constructor(description, number_of_pins = 2) {
-    this.value = description
+    const g = electroGrammar.parse(description)
+    this.type = g.type
+    this.value = g.resistance || g.capacitance
     this.pins = []
     for (let i = 0; i < number_of_pins; i++) {
       const pin = new Pin(this, i)
@@ -30,54 +34,26 @@ class Component {
     )
   }
   equals(other) {
+    const sameType = this.type === other.type
     const sameValue = this.value === other.value
-    return sameValue
+    return sampeType && sameValue
   }
 }
 
-class Resistor extends Component {
-  constructor(description) {
-    super("resistor " + description)
-  }
+function resistor(description) {
+  return new Component("resistor " + description)
 }
 
-class Capacitor extends Component {
-  constructor(description) {
-    super("capacitor " + description)
-  }
+function capacitor(description) {
+  return new Component("capacitor " + description)
 }
 
-class Transistor extends Component {
-  constructor(description) {
-    super("transistor " + description, 3)
-  }
+function npn(description) {
+  return new Component("transistor npn " + description)
 }
 
-class BJT extends Transistor {
-  constructor(description) {
-    super("BJT " + description)
-  }
-  get c() {
-    return this.pins[0]
-  }
-  get b() {
-    return this.pins[1]
-  }
-  get e() {
-    return this.pins[2]
-  }
-}
-
-class NPN extends BJT {
-  constructor(description) {
-    super("NPN " + description)
-  }
-}
-
-class PNP extends BJT {
-  constructor(description) {
-    super("PNP " + description)
-  }
+function pnp(description) {
+  return new Component("transistor pnp " + description)
 }
 
 class Label {
@@ -250,20 +226,15 @@ class Circuit {
       }
     }
     for (const c of this.components) {
-      const name = c.constructor.name
       const pinNames = {
-        Resistor: ["A", "B"],
-        Capacitor: ["A", "B"],
-        NPN: ["C", "B", "E"],
-        PNP: ["C", "B", "E"]
-      }[name]
+        resistor: ["A", "B"],
+        capacitor: ["A", "B"]
+      }[c.type]
       const type =
         {
-          Resistor: "r_v",
-          Capacitor: "c_v",
-          NPN: "q_npn",
-          PNP: "q_pnp"
-        }[name] || ""
+          resistor: "r_v",
+          capacitor: "c_v"
+        }[c.type] || ""
       const connections = c.pins
         .map(p => ({
           [pinNames[p.name]]: [2 + this.nets.findIndex(n => n.includes(p))]
@@ -301,10 +272,10 @@ function incrementRef(str) {
 
 export {
   Component,
-  Capacitor,
-  Resistor,
-  Transistor,
-  NPN,
+  capacitor,
+  resistor,
+  npn,
+  pnp,
   Circuit,
   Label,
   Power,

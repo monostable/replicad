@@ -1,6 +1,6 @@
 import {
-  Capacitor,
-  Resistor,
+  capacitor,
+  resistor,
   Circuit,
   Label,
   Input,
@@ -8,8 +8,8 @@ import {
   Ground
 } from "../lib/index"
 
-const r1 = new Resistor("1k")
-const c1 = new Capacitor("1uF")
+const r1 = resistor("1k")
+const c1 = capacitor("1uF")
 
 const vin = new Input()
 const vout = new Output()
