@@ -53,9 +53,30 @@ class Transistor extends Component {
   }
 }
 
-class NPN extends Transistor {
+class BJT extends Transistor {
+  constructor(description) {
+    super("BJT " + description)
+  }
+  get c() {
+    return this.pins[0]
+  }
+  get b() {
+    return this.pins[1]
+  }
+  get e() {
+    return this.pins[2]
+  }
+}
+
+class NPN extends BJT {
   constructor(description) {
     super("NPN " + description)
+  }
+}
+
+class PNP extends BJT {
+  constructor(description) {
+    super("PNP " + description)
   }
 }
 
@@ -230,8 +251,19 @@ class Circuit {
     }
     for (const c of this.components) {
       const name = c.constructor.name
-      const pinNames = { Resistor: ["A", "B"], Capacitor: ["A", "B"], NPN: ["C", "B", "E"]}[name]
-      const type = { Resistor: "r_v", Capacitor: "c_v", NPN: "q_npn" }[name] || ""
+      const pinNames = {
+        Resistor: ["A", "B"],
+        Capacitor: ["A", "B"],
+        NPN: ["C", "B", "E"],
+        PNP: ["C", "B", "E"]
+      }[name]
+      const type =
+        {
+          Resistor: "r_v",
+          Capacitor: "c_v",
+          NPN: "q_npn",
+          PNP: "q_pnp"
+        }[name] || ""
       const connections = c.pins
         .map(p => ({
           [pinNames[p.name]]: [2 + this.nets.findIndex(n => n.includes(p))]
