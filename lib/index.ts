@@ -48,6 +48,10 @@ function capacitor(description) {
   return new Component("capacitor " + description)
 }
 
+function led(description) {
+  return new Component("led " + description)
+}
+
 function npn(description) {
   return new Component("transistor npn " + description)
 }
@@ -228,12 +232,14 @@ class Circuit {
     for (const c of this.components) {
       const pinNames = {
         resistor: ["A", "B"],
-        capacitor: ["A", "B"]
+        capacitor: ["A", "B"],
+        led: ["+", "-"]
       }[c.type]
       const type =
         {
           resistor: "r_v",
-          capacitor: "c_v"
+          capacitor: "c_v",
+          led: "d_led_v"
         }[c.type] || ""
       const connections = c.pins
         .map(p => ({
@@ -274,6 +280,7 @@ export {
   Component,
   capacitor,
   resistor,
+  led,
   npn,
   pnp,
   Circuit,
