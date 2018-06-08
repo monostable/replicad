@@ -2,7 +2,7 @@
   "dependencies": {
     "electro-grammar": "https://github.com/monostable/electro-grammar",
     "netlistsvg": "https://github.com/nturley/netlistsvg",
-    "ts-node": "^6.0.5",
+    "ts-node": "^6.1.0",
     "ts-simple-ast": "^11.2.0",
     "typescript": "^2.8.3"
   },
