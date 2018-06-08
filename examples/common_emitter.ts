@@ -1,11 +1,11 @@
 import {
-  npn,
-  resistor,
   Circuit,
+  Ground,
   Input,
-  Output,
   Label,
-  Ground
+  npn,
+  Output,
+  resistor
 } from "../lib/index"
 
 const q1 = npn()

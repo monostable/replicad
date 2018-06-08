@@ -1,4 +1,4 @@
-import { Power, Ground, Output, Circuit } from "../lib/index"
+import { Circuit, Ground, Output, Power } from "../lib/index"
 import resistorDivider from "./resistor_divider"
 
 const div1 = resistorDivider("1k", "500 ohm")

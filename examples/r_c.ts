@@ -1,11 +1,11 @@
 import {
   capacitor,
-  resistor,
   Circuit,
-  Label,
+  Ground,
   Input,
+  Label,
   Output,
-  Ground
+  resistor
 } from "../lib/index"
 
 const r1 = resistor("1k")

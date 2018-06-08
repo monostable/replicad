@@ -1,4 +1,4 @@
-import { Resistor, Circuit, Power, Ground, Output } from "../lib/index"
+import { Circuit, Ground, Output, Power, Resistor } from "../lib/index"
 
 function resistorDivider(value1, value2) {
   const r1 = new Resistor(value1)

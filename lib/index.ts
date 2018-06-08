@@ -1,9 +1,9 @@
-const electroGrammar = require("electro-grammar")
+import electroGrammar = require("electro-grammar")
 
 class Pin {
-  name: string
-  component: Component
-  direction: string
+  public name: string
+  public component: Component
+  public direction: string
   constructor(component, name) {
     this.name = name
     this.component = component
@@ -11,15 +11,16 @@ class Pin {
 }
 
 class Component {
-  name: string
-  pins: Array<Pin>
-  value: string
-  constructor(description, number_of_pins = 2) {
+  public type: string
+  public name: string
+  public pins: Pin[]
+  public value: string
+  constructor(description, numberOfPins = 2) {
     const g = electroGrammar.parse(description)
     this.type = g.type
     this.value = g.resistance || g.capacitance
     this.pins = []
-    for (let i = 0; i < number_of_pins; i++) {
+    for (let i = 0; i < numberOfPins; i++) {
       const pin = new Pin(this, i)
       this.pins.push(pin)
       this[i] = pin
@@ -27,16 +28,16 @@ class Component {
     this.copy = this.copy.bind(this)
     this.equals = this.equals.bind(this)
   }
-  copy() {
+  public copy() {
     return Object.create(
       Object.getPrototypeOf(this),
       Object.getOwnPropertyDescriptors(this)
     )
   }
-  equals(other) {
+  public equals(other) {
     const sameType = this.type === other.type
     const sameValue = this.value === other.value
-    return sampeType && sameValue
+    return sameType && sameValue
   }
 }
 
@@ -61,9 +62,8 @@ function pnp(description) {
 }
 
 class Label {
-  name: string
-  direction: string
-  constructor() {}
+  public name: string
+  public direction: string
 }
 
 class Power extends Label {
@@ -95,11 +95,11 @@ function pinOrLabel(x) {
 }
 
 class Circuit {
-  name: string
-  components: Array<Component>
-  labels: Array<Label>
-  nets: Array<Array<Pin | Label>>
-  subcircuits: Array<Circuit>
+  public name: string
+  public components: Component[]
+  public labels: Label[]
+  public nets: Array<Array<Pin | Label>>
+  public subcircuits: Circuit[]
   constructor() {
     this.components = []
     this.labels = []
@@ -111,7 +111,7 @@ class Circuit {
     this._add = this._add.bind(this)
     this.toYosys = this.toYosys.bind(this)
   }
-  chain(...elements: any[]) {
+  public chain(...elements: any[]) {
     elements.forEach((two, i) => {
       if (i > 0) {
         let one = elements[i - 1]
@@ -128,7 +128,7 @@ class Circuit {
       }
     })
   }
-  connect(...elements: any[]) {
+  public connect(...elements: any[]) {
     elements.forEach((two, i) => {
       if (i > 0) {
         let one = elements[i - 1]
@@ -143,58 +143,7 @@ class Circuit {
       }
     })
   }
-  _connect(one, two) {
-    this._add(one)
-    this._add(two)
-    one.direction = "output"
-    two.direction = "input"
-    for (const net of this.nets) {
-      if (net.includes(one) && net.includes(two)) {
-        return
-      } else if (net.includes(one)) {
-        net.push(two)
-        return
-      } else if (net.includes(two)) {
-        net.push(one)
-        return
-      }
-    }
-    this.nets.push([one, two])
-  }
-  _add(x) {
-    if (x instanceof Pin) {
-      x = x.component
-    }
-    if (
-      !this.components.includes(x) &&
-      !this.labels.includes(x) &&
-      !this.subcircuits.includes(x.circuit)
-    ) {
-      // add the component or its corresponding circuit if it's already in a
-      // circuit
-      if (x.circuit == null) {
-        // we are adding a new label or component to this circuit
-        while (x.name in this) {
-          x.name = incrementRef(x.name)
-        }
-        x.circuit = this
-        this[x.name] = x
-        if (x instanceof Component) {
-          this.components.push(x)
-        } else if (x instanceof Label) {
-          this.labels.push(x)
-        }
-      } else {
-        // we are adding a new subcircuit
-        while (x.circuit.name in this) {
-          x.circuit.name = incrementRef(x.circuit.name)
-        }
-        this.subcircuits.push(x.circuit)
-        this[x.circuit.name] = x.circuit
-      }
-    }
-  }
-  toYosys() {
+  public toYosys() {
     const ports = {}
     const cells = {}
     for (const c of this.labels) {
@@ -246,12 +195,12 @@ class Circuit {
           [pinNames[p.name]]: [2 + this.nets.findIndex(n => n.includes(p))]
         }))
         .reduce((p, o) => Object.assign(p, o), {})
-      const port_directions = c.pins
+      const portDirections = c.pins
         .map(p => ({ [pinNames[p.name]]: p.direction }))
         .reduce((p, o) => Object.assign(p, o), {})
       cells[c.name] = {
         type,
-        port_directions,
+        port_directions: portDirections,
         connections
       }
     }
@@ -264,12 +213,63 @@ class Circuit {
       }
     }
   }
+  private _connect(one, two) {
+    this._add(one)
+    this._add(two)
+    one.direction = "output"
+    two.direction = "input"
+    for (const net of this.nets) {
+      if (net.includes(one) && net.includes(two)) {
+        return
+      } else if (net.includes(one)) {
+        net.push(two)
+        return
+      } else if (net.includes(two)) {
+        net.push(one)
+        return
+      }
+    }
+    this.nets.push([one, two])
+  }
+  private _add(x) {
+    if (x instanceof Pin) {
+      x = x.component
+    }
+    if (
+      !this.components.includes(x) &&
+      !this.labels.includes(x) &&
+      !this.subcircuits.includes(x.circuit)
+    ) {
+      // add the component or its corresponding circuit if it's already in a
+      // circuit
+      if (x.circuit == null) {
+        // we are adding a new label or component to this circuit
+        while (x.name in this) {
+          x.name = incrementRef(x.name)
+        }
+        x.circuit = this
+        this[x.name] = x
+        if (x instanceof Component) {
+          this.components.push(x)
+        } else if (x instanceof Label) {
+          this.labels.push(x)
+        }
+      } else {
+        // we are adding a new subcircuit
+        while (x.circuit.name in this) {
+          x.circuit.name = incrementRef(x.circuit.name)
+        }
+        this.subcircuits.push(x.circuit)
+        this[x.circuit.name] = x.circuit
+      }
+    }
+  }
 }
 
 function incrementRef(str) {
   const ns = str.split(/\D/)
   const lastN = ns[ns.length - 1]
-  const n = parseInt(lastN)
+  const n = parseInt(lastN, 10)
   if (isNaN(n)) {
     return str + "2"
   }

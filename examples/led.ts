@@ -1,11 +1,11 @@
 import {
-  resistor,
-  led,
   Circuit,
-  Label,
+  Ground,
   Input,
+  Label,
+  led,
   Output,
-  Ground
+  resistor
 } from "../lib/index"
 
 const r1 = resistor("1k")
