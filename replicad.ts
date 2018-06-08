@@ -1,11 +1,11 @@
 #!/usr/bin/env ts-node
 // vim: filetype=typescript
 
-const Project = require("ts-simple-ast").default
-const ts = require("typescript")
-const path = require("path")
-const fs = require("fs")
-const netlistsvg = require("netlistsvg")
+import fs = require("fs")
+import netlistsvg = require("netlistsvg")
+import path = require("path")
+import Project from "ts-simple-ast"
+import * as ts from "typescript"
 
 const inputPath = process.argv[2]
 
@@ -24,16 +24,16 @@ const circuit = require("./" + inputPath.replace(/\.ts$/, ".js")).default
 const netlist = circuit.toYosys()
 
 const skinPath = path.join(__dirname, "node_modules/netlistsvg/lib/analog.svg")
-fs.readFile(skinPath, function(err, skinData) {
-  if (err) throw err
-  netlistsvg.render(skinData, netlist, function(err, svg_data) {
-    if (err) throw err
-    console.log(svg_data)
+fs.readFile(skinPath, (err, skinData) => {
+  if (err) { throw err }
+  netlistsvg.render(skinData, netlist, (err2, svgData) => {
+    if (err2) { throw err2 }
+    console.log(svgData)
   })
 })
 
-function addNames(sourceFiles) {
-  sourceFiles.forEach(f => {
+function addNames(files) {
+  files.forEach(f => {
     const imports = f
       .getImportDeclarations()
       .map(i => i.getModuleSpecifierSourceFile())
@@ -73,12 +73,12 @@ function getObjectVariableName(e) {
     e = e.getExpression()
     prev.unshift(e)
   }
-  //if our expression is not something that can be added to a circuit, roll
-  //back to the last expression that was
-  for (const e of prev) {
-    const base = getBaseName(e)
+  // if our expression is not something that can be added to a circuit, roll
+  // back to the last expression that was
+  for (const prevExp of prev) {
+    const base = getBaseName(prevExp)
     if (base === "Label" || base === "Component") {
-      return e.getText()
+      return prevExp.getText()
     }
   }
 }

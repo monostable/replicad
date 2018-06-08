@@ -9,5 +9,8 @@
   "scripts": {
     "examples": "for f in examples/*.ts; do ts-node transform.ts \"$f\"; done"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.13.0"
+  }
 }

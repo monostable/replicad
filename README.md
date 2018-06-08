@@ -57,7 +57,7 @@ Output:
 
 ```
 npm install
-npx ./replicad examples/r_c.ts > out.svg
+npx ts-node -D7006 -D7016 replicad.ts examples/r_c.ts > out.svg
 ```
 
 ## Related Work
