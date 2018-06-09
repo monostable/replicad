@@ -16,9 +16,13 @@ class Component {
   public pins: Pin[]
   public value: string
   constructor(description, numberOfPins = 2) {
-    const g = electroGrammar.parse(description)
-    this.type = g.type
-    this.value = g.resistance || g.capacitance || g.color
+    if (/^led $/.test(description)) {
+      this.type = 'led'
+    } else {
+      const g = electroGrammar.parse(description)
+      this.type = g.type
+      this.value = g.resistance || g.capacitance || g.color
+    }
     this.pins = []
     for (let i = 0; i < numberOfPins; i++) {
       const pin = new Pin(this, i)
@@ -49,7 +53,7 @@ function capacitor(description) {
   return new Component("capacitor " + description)
 }
 
-function led(description) {
+function led(description='') {
   return new Component("led " + description)
 }
 
