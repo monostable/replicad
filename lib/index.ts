@@ -18,7 +18,7 @@ class Component {
   constructor(description, numberOfPins = 2) {
     const g = electroGrammar.parse(description)
     this.type = g.type
-    this.value = g.resistance || g.capacitance
+    this.value = g.resistance || g.capacitance || g.color
     this.pins = []
     for (let i = 0; i < numberOfPins; i++) {
       const pin = new Pin(this, i)
