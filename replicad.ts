@@ -25,11 +25,16 @@ const netlist = circuit.toYosys()
 
 const skinPath = path.join(__dirname, "node_modules/netlistsvg/lib/analog.svg")
 fs.readFile(skinPath, (err, skinData) => {
-  if (err) { throw err }
-  netlistsvg.render(skinData, netlist, (err2, svgData) => {
-    if (err2) { throw err2 }
-    console.log(svgData)
-  })
+  if (err) {
+    throw err
+  }
+  netlistsvg
+    .render(skinData, netlist)
+    .then(console.log)
+    .catch(e => {
+      console.error(e)
+      process.exit(1)
+    })
 })
 
 function addNames(files) {
