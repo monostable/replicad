@@ -851,7 +851,7 @@ natural-compare@^1.4.0:
 
 "netlistsvg@https://github.com/nturley/netlistsvg":
   version "0.0.1"
-  resolved "https://github.com/nturley/netlistsvg#c3d338e0ea0e72c46ec40360a717af11d73db66f"
+  resolved "https://github.com/nturley/netlistsvg#68c1ed9a48470143cbacc2ebbf8a34f9ff81995e"
   dependencies:
     clone "^2.1.0"
     elkjs "^0.3.0"
