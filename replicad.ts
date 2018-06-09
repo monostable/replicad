@@ -56,7 +56,6 @@ function addNames(files) {
           .getText() === "Circuit"
       ) {
         call.getArguments().forEach(arg => {
-          const original = arg.getText()
           const v = getObjectVariableName(arg)
           arg.replaceWithText(`(${v}.name = '${v}', ${arg.getText()})`)
         })
