@@ -1,19 +1,18 @@
 import {
   capacitor,
   Circuit,
-  Ground,
-  Input,
-  Label,
-  Output,
+  ground,
+  input,
+  output,
   resistor
 } from "../lib/index"
 
 const r1 = resistor("1k")
 const c1 = capacitor("1uF")
 
-const vin = new Input()
-const vout = new Output()
-const gnd = new Ground()
+const vin = input()
+const vout = output()
+const gnd = ground()
 
 const circuit = new Circuit()
 

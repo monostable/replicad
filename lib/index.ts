@@ -61,33 +61,36 @@ function pnp(description) {
   return new Component("transistor pnp " + description)
 }
 
+enum LabelType {
+  Power,
+  Ground,
+  Input,
+  Output
+}
+
 class Label {
+  public type: LabelType
   public name: string
   public direction: string
-}
-
-class Power extends Label {
-  constructor() {
-    super()
+  constructor(type) {
+    this.type = type
   }
 }
 
-class Ground extends Label {
-  constructor() {
-    super()
-  }
+function power() {
+  return new Label(LabelType.Power)
 }
 
-class Input extends Label {
-  constructor() {
-    super()
-  }
+function ground() {
+  return new Label(LabelType.Ground)
 }
 
-class Output extends Label {
-  constructor() {
-    super()
-  }
+function input() {
+  return new Label(LabelType.Input)
+}
+
+function output() {
+  return new Label(LabelType.Output)
 }
 
 function pinOrLabel(x) {
@@ -147,7 +150,7 @@ class Circuit {
     const ports = {}
     const cells = {}
     for (const c of this.labels) {
-      if (c instanceof Power) {
+      if (c.type === LabelType.Power) {
         cells[c.name] = {
           type: "vcc",
           port_directions: {
@@ -157,7 +160,7 @@ class Circuit {
             A: [2 + this.nets.findIndex(n => n.includes(c))]
           }
         }
-      } else if (c instanceof Ground) {
+      } else if (c.type === LabelType.Ground) {
         cells[c.name] = {
           type: "gnd",
           port_directions: {
@@ -169,9 +172,9 @@ class Circuit {
         }
       } else {
         const direction =
-          c instanceof Output
+          c.type === LabelType.Output
             ? "output"
-            : c instanceof Input ? "input" : c.direction
+            : c.type === LabelType.Input ? "input" : c.direction
         ports[c.name] = {
           direction,
           bits: [2 + this.nets.findIndex(n => n.includes(c))]
@@ -285,8 +288,8 @@ export {
   pnp,
   Circuit,
   Label,
-  Power,
-  Ground,
-  Output,
-  Input
+  power,
+  ground,
+  output,
+  input
 }

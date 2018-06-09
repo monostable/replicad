@@ -26,19 +26,19 @@ _work in progress_
 ```js
 import {
   capacitor,
-  resistor,
   Circuit,
-  Input,
-  Output,
-  Ground
+  ground,
+  input,
+  output,
+  resistor
 } from "../lib/index"
 
 const r1 = resistor("1k")
 const c1 = capacitor("1uF")
 
-const vin = new Input()
-const vout = new Output()
-const gnd = new Ground()
+const vin = input()
+const vout = output()
+const gnd = ground()
 
 const circuit = new Circuit()
 
