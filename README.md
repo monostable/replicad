@@ -11,7 +11,7 @@ Design circuits using Javascript/Typescript.
 - Make it easier to design and reason about circuits
 - Offer static analysis and design rule checks to make it hard to introduce errors into your circuit
 - Encourage design re-use
-- Provide an interactive editor and viewer wth a visual preview of your circuit
+- Provide an interactive editor and viewer with a visual preview of your circuit
 
 ## Implementation
 
