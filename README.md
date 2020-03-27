@@ -7,9 +7,9 @@ Design circuits using Javascript/Typescript.
 
 ## Goals
 
-- Confirm [Atwood's Law](https://blog.codinghorror.com/the-principle-of-least-power/)
+- Confirm [Atwood's Law](https://blog.codinghorror.com/the-principle-of-least-power/): "Any application that can be written in JavaScript, will eventually be written in JavaScript"
 - Make it easier to design and reason about circuits
-- Offer static analysis and DRC checks to make it hard to introduce errors into your circuit
+- Offer static analysis and design rule checks to make it hard to introduce errors into your circuit
 - Encourage design re-use
 - Provide an interactive editor and viewer wth a visual preview of your circuit
 
@@ -65,4 +65,4 @@ npx ts-node -D7006 -D7016 replicad.ts examples/r_c.ts > out.svg
 - [PHDL](https://sourceforge.net/p/phdl/wiki/Home/) - The PCB hardware description language, an HDL that can be used to generate Eagle, Orcad and other netlists.
 - [SKiDL](http://xesscorp.github.io/skidl) - Extends Python with the ability to design electronic circuits.
 - [pycircuit](https://github.com/dvc94ch/pycircuit) - Ditto, also does footprints, layout and routing. Has some cool experimental support for placement/layout/routing using SMT solvers and has it's own interactive viewer.
-- [netlistsvg](https://github.com/nturley/ntelistsvg) - The schematic rendering library we will be using for our interactive editor.
+- [netlistsvg](https://github.com/nturley/netlistsvg) - The schematic rendering library we will be using for our interactive editor.
