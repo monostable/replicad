@@ -7,7 +7,7 @@
     "typescript": "^2.8.3"
   },
   "scripts": {
-    "examples": "for f in examples/*.ts; do ts-node -D7006 -D7016 replicad.ts \"$f\"; done",
+    "examples": "for f in examples/*.ts; do ts-node -D7006 -D7016 replicad.ts \"$f\" > \"$f.svg\"; done",
     "lint": "tslint --project ."
   },
   "devDependencies": {
